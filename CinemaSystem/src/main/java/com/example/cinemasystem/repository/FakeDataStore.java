@@ -1,6 +1,9 @@
 package com.example.cinemasystem.repository;
 
+import com.example.cinemasystem.Interfaces.IAccount;
+import com.example.cinemasystem.Logic.UserManager;
 import com.example.cinemasystem.model.Movie;
+import com.example.cinemasystem.model.UserAccount;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -10,17 +13,63 @@ import java.util.List;
 public class FakeDataStore {
 
     private final List<Movie> movieList = new ArrayList<>();
+    public UserManager userManager;
 
     public FakeDataStore()
     {
         Movie fastAndFurious = new Movie(1,"Fast and furious",2.45,Genre.Action,7.5,"John Hill");
         Movie inception = new Movie(2,"Inception",2.59,Genre.Mystery,9.0,"Christopher Nolan");
         Movie lionKing = new Movie(3,"Lion King", 2.18,Genre.Drama,8.5,"Roger Allers");
+        IAccount Yordan = new UserAccount(2,"yordan","pass","yor@","Yordan","Ivanov");
 
+        userManager = new UserManager();
+        userManager.userAccounts.add(Yordan);
         movieList.add(fastAndFurious);
         movieList.add(inception);
         movieList.add(lionKing);
     }
+
+
+
+    public boolean checkUser(String username, String password) {
+        for (IAccount user : this.userManager.userAccounts) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public IAccount GetAccountByUsername(String username) {
+        for (IAccount account : this.userManager.userAccounts) {
+            if (account.getUsername().equals(username))
+                return account;
+        }
+        return null;
+    }
+
+    public IAccount GetAccountByEmail(String email) {
+        for (IAccount account : this.userManager.userAccounts) {
+            if (account.getEmail().equals(email))
+                return account;
+        }
+        return null;
+    }
+
+    public int AddAccount(IAccount account) {
+        if (this.GetAccountByUsername(account.getUsername()) != null ) {
+            return -1;
+        }else if(this.GetAccountByEmail(account.getEmail()) != null){
+            return -2;
+        }
+        this.userManager.userAccounts.add(account);
+        return 0;
+    }
+
+
+
+
+
 
     public  List<Movie> GetMovies(){return  movieList;}
 
