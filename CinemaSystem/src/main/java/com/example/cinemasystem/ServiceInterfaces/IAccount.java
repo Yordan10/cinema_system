@@ -1,4 +1,4 @@
-package com.example.cinemasystem.Interfaces;
+package com.example.cinemasystem.ServiceInterfaces;
 
 public interface IAccount {
 
