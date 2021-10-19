@@ -1,4 +1,4 @@
-package com.example.cinemasystem.repository;
+package com.example.cinemasystem.Enums;
 
 public enum Genre {
      Action,

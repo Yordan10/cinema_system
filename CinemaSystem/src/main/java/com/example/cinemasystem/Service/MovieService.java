@@ -3,7 +3,7 @@ package com.example.cinemasystem.Service;
 import com.example.cinemasystem.ServiceInterfaces.IMovieService;
 import com.example.cinemasystem.model.Movie;
 
-import com.example.cinemasystem.repository.Genre;
+import com.example.cinemasystem.Enums.Genre;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

@@ -22,7 +22,7 @@ public class UserService implements IUserService {
     {
         userAccounts = new ArrayList<IAccount>();
 
-        IAccount Yordan = new UserAccount(2,"yordan","pass","yor@","Yordan","Ivanov");
+        IAccount Yordan = new UserAccount(1,"yordan","pass","yor@","Yordan","Ivanov");
         userAccounts.add(Yordan);
     }
 

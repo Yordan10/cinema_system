@@ -1,6 +1,6 @@
 package com.example.cinemasystem.model;
 
-import com.example.cinemasystem.repository.Genre;
+import com.example.cinemasystem.Enums.Genre;
 import lombok.Getter;
 import lombok.Setter;
 

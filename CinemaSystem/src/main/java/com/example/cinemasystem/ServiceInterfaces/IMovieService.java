@@ -1,7 +1,7 @@
 package com.example.cinemasystem.ServiceInterfaces;
 
 import com.example.cinemasystem.model.Movie;
-import com.example.cinemasystem.repository.Genre;
+import com.example.cinemasystem.Enums.Genre;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
