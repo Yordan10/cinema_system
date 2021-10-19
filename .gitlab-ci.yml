@@ -3,9 +3,10 @@ stages:
   - test
 
 
-build-job:       
+build:       
   stage: build
   script:
     - gradle assemble
     - gradle test
+    - echo "Build successful"
 
