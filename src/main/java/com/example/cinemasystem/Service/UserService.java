@@ -1,42 +1,48 @@
 package com.example.cinemasystem.Service;
 
 
+import com.example.cinemasystem.DALInterfaces.IAccountDAL;
 import com.example.cinemasystem.ServiceInterfaces.IAccount;
 import com.example.cinemasystem.ServiceInterfaces.IUserService;
 import com.example.cinemasystem.model.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@Service
 public class UserService implements IUserService {
-    @Autowired
+
     public List<IAccount> userAccounts;
+    IAccountDAL dal;
 
-    public UserService()
-    {
-        userAccounts = new ArrayList<IAccount>();
 
-        IAccount Yordan = new UserAccount(1,"yordan","pass","yor@","Yordan","Ivanov");
-        userAccounts.add(Yordan);
+    @Autowired
+    public UserService(IAccountDAL dal) {
+        this.dal = dal;
+
     }
 
-    public IAccount GetAccountById(int id)
+    @Override
+    public ResponseEntity<List<IAccount>> ReturnAllAccounts()
     {
-        for (IAccount account : userAccounts )
+        if (dal.getAllAccounts() == null)
         {
-            if (account.getId() == id)
-            {
-                return account;
-            }
+            return ResponseEntity.notFound().build();
         }
-        return null;
+        else
+        {
+            return ResponseEntity.ok().body(dal.getAllAccounts());
+        }
+
     }
+
+
     public boolean checkUser(String username, String password) {
         for (IAccount user : this.userAccounts) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
@@ -95,9 +101,10 @@ public class UserService implements IUserService {
             return new ResponseEntity(entity, HttpStatus.CREATED);
         }
     }
+    @Override
     public ResponseEntity<IAccount> ReturnAccountByID(int id)
     {
-        IAccount account = GetAccountById(id);
+        IAccount account = dal.getAccountById(id);
         if (account == null)
         {
             return ResponseEntity.notFound().build();
