@@ -23,6 +23,7 @@ public class AccountController {
     {
         return userService.ReturnAllAccounts();
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<IAccount> GetAccountById(@PathVariable(value = "id") int id)
     {

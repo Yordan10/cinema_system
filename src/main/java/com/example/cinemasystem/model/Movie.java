@@ -1,13 +1,14 @@
 package com.example.cinemasystem.model;
 
 import com.example.cinemasystem.Enums.Genre;
+import com.example.cinemasystem.ServiceInterfaces.IMovie;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Objects;
 
 
-public class Movie {
+public class Movie implements IMovie {
 
     @Getter @Setter
     private  int id;

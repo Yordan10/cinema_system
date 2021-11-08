@@ -8,10 +8,7 @@ import java.util.List;
 
 public interface IMovieService {
 
-    ResponseEntity CreateMovie(Movie movie);
-    ResponseEntity<List<Movie>> ReturnAllMovies();
-    ResponseEntity<Movie> ReturnMovieById(int id);
-    ResponseEntity ReturnDeleteMovie(int id);
-    ResponseEntity<Movie> ReturnUpdateMovie(int id, String title, Double length, Genre genre, Double rating, String director);
+    ResponseEntity<List<IMovie>> ReturnAllMovies();
+    ResponseEntity<IMovie> ReturnMovieById(int id);
 
 }
