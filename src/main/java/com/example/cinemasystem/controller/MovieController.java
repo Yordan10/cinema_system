@@ -32,22 +32,9 @@ public class MovieController {
         return movieService.ReturnMovieById(id);
     }
 
-  /*  @DeleteMapping("{id}")
-    public ResponseEntity DeleteMovie(@PathVariable int id) {
-
-        return movieService.ReturnDeleteMovie(id);
-    }
-
-    @PostMapping()
-    public ResponseEntity<Movie> AddMovie(@RequestBody Movie movie) {
-
-        return this.movieService.CreateMovie(movie);
-
-    }
-
-    @PutMapping("{id}")
-    public ResponseEntity<Movie> UpdateMovie(@PathVariable("id") int id, @RequestParam String title, @RequestParam Double length, @RequestParam Genre genre,@RequestParam Double rating, @RequestParam String director)
+    @GetMapping("/photo/{id}")
+    public ResponseEntity<String> GetPhotoMovieById(@PathVariable(value = "id") int id)
     {
-        return movieService.ReturnUpdateMovie(id,title,length,genre,rating,director);
-    }*/
+        return movieService.ReturnPhotoOfMovieByID(id);
+    }
 }

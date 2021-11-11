@@ -74,4 +74,26 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
         }
         return movie;
     }
+    @Override
+    public String getPhotoByMovieId(int id) {
+
+        String sql = "SELECT * from individual_project.movie_photo WHERE movie_id = ?";
+        Connection connection = this.getDatabaseConnection();
+        String path = "";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+
+            path = resultSet.getString("photo_path");
+
+            connection.commit();
+            connection.close();
+
+        } catch (SQLException throwable) {System.out.println("Ne sum swyrzan");}
+
+        return path;
+    }
 }

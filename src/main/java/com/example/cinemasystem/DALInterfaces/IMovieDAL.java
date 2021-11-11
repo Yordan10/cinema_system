@@ -7,4 +7,5 @@ import java.util.ArrayList;
 public interface IMovieDAL {
     ArrayList<IMovie> getAllMovies();
     IMovie getMovieById(int id);
+    String getPhotoByMovieId(int id);
 }

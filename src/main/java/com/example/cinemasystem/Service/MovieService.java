@@ -55,5 +55,18 @@ public class MovieService implements IMovieService {
             return ResponseEntity.ok().body(movie);
         }
     }
+    @Override
+    public ResponseEntity<String> ReturnPhotoOfMovieByID(int id)
+    {
+        String path = dal.getPhotoByMovieId(id);
+        if (path == "")
+        {
+            return ResponseEntity.notFound().build();
+        }
+        else
+        {
+            return ResponseEntity.ok().body(path);
+        }
+    }
 
 }
