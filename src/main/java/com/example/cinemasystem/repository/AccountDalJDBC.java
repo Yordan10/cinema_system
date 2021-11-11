@@ -74,4 +74,62 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
 
         return account;
     }
+
+    @Override
+    public IAccount getAccountByUsername(String username) {
+
+        String sql = "SELECT * from  individual_project.user WHERE username = ?" ;
+        Connection connection = this.getDatabaseConnection();
+
+        try {
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, username);
+
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+
+            int accountId = resultSet.getInt("ID");
+            String accountName = resultSet.getString("username");
+            String password = resultSet.getString("password");
+            String email = resultSet.getString("email");
+            String firstName = resultSet.getString("first_name");
+            String lastName = resultSet.getString("last_name");
+
+            IAccount account = new UserAccount(accountId, accountName, password,email,firstName,lastName);
+
+
+            connection.commit();
+            connection.close();
+            return account;
+
+        } catch (SQLException throwable) {System.out.println("Ne sum swyrzan");}
+
+        return null;
+    }
+
+
+    @Override
+    public void addAccount(IAccount account) {
+        Connection connection = this.getDatabaseConnection();
+        String sql = "INSERT INTO   individual_project.user ( `ID`,`username`, `password`, `email` ,`first_name`, `last_name`) VALUES ( null, ?, ?, ?, ?, ?);";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, account.getUsername());
+            statement.setString(2, account.getPassword());
+            statement.setString(3, account.getEmail());
+            statement.setString(4, account.getFirstName());
+            statement.setString(5, account.getLastName());
+
+
+
+            statement.executeUpdate();
+
+            connection.commit();
+            connection.close();
+
+        } catch (SQLException throwable) {System.out.println("Cant add to database");}
+    }
 }

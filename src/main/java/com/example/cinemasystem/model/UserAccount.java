@@ -8,4 +8,5 @@ public class UserAccount extends  User implements IAccount {
         super(id,username,password,email,firstName,lastName);
 
     }
+    public UserAccount(){}
 }

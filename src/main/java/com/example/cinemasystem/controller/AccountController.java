@@ -4,6 +4,7 @@ import com.example.cinemasystem.Service.UserService;
 import com.example.cinemasystem.ServiceInterfaces.IAccount;
 import com.example.cinemasystem.ServiceInterfaces.IUserService;
 import com.example.cinemasystem.model.UserAccount;
+import com.example.cinemasystem.model.request.UserCreateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,15 +31,16 @@ public class AccountController {
         return userService.ReturnAccountByID(id);
     }
 
-    @PostMapping("/login")
+  /*  @PostMapping("/login")
     public ResponseEntity<Map<String, Boolean>> CheckLogin(@RequestBody UserAccount account) {
 
        return userService.CheckLogin(account);
-    }
+    }*/
 
     @PostMapping("/register")
-    public ResponseEntity<UserAccount> UserRegistration(@RequestBody UserAccount user) {
+    public ResponseEntity UserRegistration(@RequestBody UserCreateRequest userCreateRequest) {
 
-      return userService.UserRegistration(user);
+       userService.UserRegistration(userCreateRequest);
+       return ResponseEntity.ok().build();
     }
 }
