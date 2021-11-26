@@ -1,14 +1,21 @@
 package com.example.cinemasystem.controller;
 
+import com.example.cinemasystem.Service.FileStorageService;
 import com.example.cinemasystem.Service.MovieService;
 import com.example.cinemasystem.ServiceInterfaces.IMovie;
 import com.example.cinemasystem.ServiceInterfaces.IMovieService;
 import com.example.cinemasystem.model.Movie;
 import com.example.cinemasystem.Enums.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 
@@ -19,6 +26,9 @@ public class MovieController {
 
     @Autowired
     private  IMovieService movieService ;
+
+    @Autowired
+    FileStorageService storageService;
 
     @GetMapping
     public ResponseEntity<List<IMovie>> GetAllMovies()
@@ -32,9 +42,37 @@ public class MovieController {
         return movieService.ReturnMovieById(id);
     }
 
-    @GetMapping("/photo/{id}")
-    public ResponseEntity<String> GetPhotoMovieById(@PathVariable(value = "id") int id)
+    @PostMapping("/upload/photo")
+    public ResponseEntity UploadPhoto(@RequestParam("file") MultipartFile file)
     {
-        return movieService.ReturnPhotoOfMovieByID(id);
+        try{
+            storageService.save(file);
+            return ResponseEntity.ok().body("File uploaded");
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.badRequest().build();
+        }
+
+    }
+
+    @GetMapping("/photo/{id}")
+    public ResponseEntity<Resource> GetMoviePhotoById(@PathVariable(value = "id") int id)
+    {
+        String filename =  movieService.ReturnPhotoOfMovieByID(id);
+
+        ByteArrayResource inputStream = null;
+
+        try{
+            String directory = new File("./" ).getCanonicalPath() + "/photos/" + filename;
+
+            inputStream = new ByteArrayResource(Files.readAllBytes(Paths.get(
+                    directory)));
+        }
+        catch (Exception e){}
+
+        return ResponseEntity.ok()
+                .contentLength(inputStream.contentLength())
+                .body(inputStream);
     }
 }

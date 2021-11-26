@@ -79,5 +79,18 @@ public class UserService implements IUserService {
             return ResponseEntity.ok().body(account);
         }
     }
+    @Override
+    public ResponseEntity<IAccount> ReturnAccountByUsername(String username)
+    {
+        IAccount account = dal.getAccountByUsername(username);
+        if (account == null)
+        {
+            return ResponseEntity.notFound().build();
+        }
+        else
+        {
+            return ResponseEntity.ok().body(account);
+        }
+    }
 }
 

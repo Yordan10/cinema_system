@@ -7,6 +7,8 @@ import com.example.cinemasystem.model.UserAccount;
 import com.example.cinemasystem.model.request.UserCreateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,11 +34,14 @@ public class AccountController {
         return userService.ReturnAccountByID(id);
     }
 
-  /*  @PostMapping("/login")
-    public ResponseEntity<Map<String, Boolean>> CheckLogin(@RequestBody UserAccount account) {
+    @GetMapping("/user")
+    public ResponseEntity<IAccount> GetAccountByUsername()
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
 
-       return userService.CheckLogin(account);
-    }*/
+        return userService.ReturnAccountByUsername(currentPrincipalName);
+    }
 
     @PostMapping("/register")
     public ResponseEntity UserRegistration(@RequestBody UserCreateRequest userCreateRequest) {

@@ -11,6 +11,6 @@ public interface IMovieService {
 
     ResponseEntity<List<IMovie>> ReturnAllMovies();
     ResponseEntity<IMovie> ReturnMovieById(int id);
-    ResponseEntity<String>ReturnPhotoOfMovieByID(int id);
+    String ReturnPhotoOfMovieByID(int id);
 
 }
