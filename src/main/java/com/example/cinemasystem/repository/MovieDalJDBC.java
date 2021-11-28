@@ -5,6 +5,8 @@ import com.example.cinemasystem.Enums.Genre;
 import com.example.cinemasystem.ServiceInterfaces.IAccount;
 import com.example.cinemasystem.ServiceInterfaces.IMovie;
 import com.example.cinemasystem.model.Movie;
+import com.example.cinemasystem.model.Trailer;
+import com.example.cinemasystem.model.request.MovieCreateRequest;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -28,20 +30,28 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
             while (resultSet.next()) {
                 int id = resultSet.getInt("ID");
                 String title = resultSet.getString("title");
+                String description = resultSet.getString("description");
                 Double length = resultSet.getDouble("length");
                 String genre = resultSet.getString("genre");
                 Double rating = resultSet.getDouble("rating");
                 String director = resultSet.getString("director");
 
-                IMovie movie =  new Movie(id,title,length,Genre.valueOf(genre),rating,director);
+                IMovie movie =  new Movie(id,title,description,length,Genre.valueOf(genre),rating,director);
                 movies.add(movie);
             }
 
-            connection.commit();
-            connection.close();
         }
         catch (SQLException throwable){
             System.out.println("Can't connect to database");
+        }
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
         }
         return movies;
     }
@@ -61,16 +71,26 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
             int movieId = resultSet.getInt("ID");
             String title = resultSet.getString("title");
+            String description = resultSet.getString("description");
             Double length = resultSet.getDouble("length");
             String genre = resultSet.getString("genre");
             Double rating = resultSet.getDouble("rating");
             String director = resultSet.getString("director");
 
-            movie = new Movie(movieId,title,length,Genre.valueOf(genre),rating,director);
+            movie = new Movie(movieId,title,description,length,Genre.valueOf(genre),rating,director);
         }
         catch (SQLException throwable)
         {
             System.out.println("Can't connect to database");
+        }
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
         }
         return movie;
     }
@@ -89,11 +109,86 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
             path = resultSet.getString("photo_path");
 
-            connection.commit();
-            connection.close();
 
-        } catch (SQLException throwable) {System.out.println("Ne sum swyrzan");}
 
+        } catch (SQLException throwable) {System.out.println("Can't connect to database");}
+
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
+        }
         return path;
+    }
+
+    @Override
+    public Trailer getTrailerByMovieId(int id){
+        String sql = "SELECT * from movie_trailers WHERE movie_id = ?";
+        Connection connection = this.getDatabaseConnection();
+        Trailer trailer = null;
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()) {
+
+                int videoId = resultSet.getInt("ID");
+                String link = resultSet.getString("link");
+
+                trailer = new Trailer(videoId, link);
+            }
+
+        }
+        catch (SQLException throwable) {System.out.println("Can't get video of charity");}
+
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
+        }
+        return trailer;
+
+    }
+    @Override
+    public void AddMovie(MovieCreateRequest movieCreateRequest)
+    {
+        Connection connection = this.getDatabaseConnection();
+        String sql = "INSERT INTO individual_project.movie (`title`, `description`, `length`, `genre`, `rating`, `director`) VALUES (?,?,?,?,?,?)";
+
+        try{
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1,movieCreateRequest.getTitle());
+            statement.setString(2,movieCreateRequest.getDescription());
+            statement.setDouble(3,movieCreateRequest.getLength());
+            statement.setString(4,movieCreateRequest.getGenre().toString());
+            statement.setDouble(5,movieCreateRequest.getRating());
+            statement.setString(6,movieCreateRequest.getDirector());
+
+
+            statement.executeUpdate();
+        }
+        catch (SQLException throwable){throwable.toString();}
+
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
+        }
+
     }
 }

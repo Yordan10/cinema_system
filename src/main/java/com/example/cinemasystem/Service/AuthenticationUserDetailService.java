@@ -24,7 +24,7 @@ public class AuthenticationUserDetailService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
-                user.getPassword(), getAuthorities("USER"));
+                user.getPassword(), getAuthorities(user.getRole()));
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(String role) {

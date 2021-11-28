@@ -30,15 +30,23 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
                 String email = resultSet.getString("email");
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
+                String role = resultSet.getString("role");
 
-                IAccount account = new UserAccount(id, username, password,email,firstName,lastName);
+                IAccount account = new UserAccount(id, username, password,email,firstName,lastName,role);
                 accounts.add(account);
             }
 
-            connection.commit();
-            connection.close();
+        } catch (SQLException throwable) {System.out.println("Cant' get all accounts");}
 
-        } catch (SQLException throwable) {System.out.println("Ne sum swyrzan");}
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
+        }
 
         return accounts;
     }
@@ -63,14 +71,25 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
             String email = resultSet.getString("email");
             String firstName = resultSet.getString("first_name");
             String lastName = resultSet.getString("last_name");
+            String role = resultSet.getString("role");
 
-            account = new UserAccount(accountId, username, password,email,firstName,lastName);
+            account = new UserAccount(accountId, username, password,email,firstName,lastName,role);
 
 
             connection.commit();
             connection.close();
 
-        } catch (SQLException throwable) {System.out.println("Ne sum swyrzan");}
+        } catch (SQLException throwable) {System.out.println("Can't get account by id");}
+
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
+        }
 
         return account;
     }
@@ -95,15 +114,23 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
             String email = resultSet.getString("email");
             String firstName = resultSet.getString("first_name");
             String lastName = resultSet.getString("last_name");
+            String role = resultSet.getString("role");
 
-            IAccount account = new UserAccount(accountId, accountName, password,email,firstName,lastName);
+            IAccount account = new UserAccount(accountId, accountName, password,email,firstName,lastName,role);
 
-
-            connection.commit();
-            connection.close();
             return account;
 
-        } catch (SQLException throwable) {System.out.println("Ne sum swyrzan");}
+        } catch (SQLException throwable) {System.out.println("Can't get account by username");}
+
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
+        }
 
         return null;
     }
@@ -112,7 +139,7 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
     @Override
     public void addAccount(IAccount account) {
         Connection connection = this.getDatabaseConnection();
-        String sql = "INSERT INTO   individual_project.user ( `ID`,`username`, `password`, `email` ,`first_name`, `last_name`) VALUES ( null, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO   individual_project.user ( `ID`,`username`, `password`, `email` ,`first_name`, `last_name`, `role`) VALUES ( null, ?, ?, ?, ?, ?,?);";
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -122,14 +149,23 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
             statement.setString(3, account.getEmail());
             statement.setString(4, account.getFirstName());
             statement.setString(5, account.getLastName());
+            statement.setString(6, account.getRole());
 
 
 
             statement.executeUpdate();
 
-            connection.commit();
-            connection.close();
 
-        } catch (SQLException throwable) {System.out.println("Cant add to database");}
+        } catch (SQLException throwable) {System.out.println("Cant add userAccount to database");}
+
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
+        }
     }
 }

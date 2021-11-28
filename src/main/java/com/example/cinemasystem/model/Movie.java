@@ -15,6 +15,8 @@ public class Movie implements IMovie {
     @Getter @Setter
     private String title;
     @Getter @Setter
+    private String description;
+    @Getter @Setter
     private Double length;
     @Getter @Setter
     private Genre genre;
@@ -23,10 +25,11 @@ public class Movie implements IMovie {
     @Getter @Setter
     private String director;
 
-    public Movie(int id,String title,Double length,Genre genre, Double rating,String director)
+    public Movie(int id,String title,String description,Double length,Genre genre, Double rating,String director)
     {
         this.id=id;
         this.title=title;
+        this.description=description;
         this.length = length;
         this.genre = genre;
         this.rating = rating;

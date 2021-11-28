@@ -61,7 +61,9 @@ public class UserService implements IUserService {
                 passwordEncoder.encode(userCreateRequest.getPassword()),
                 userCreateRequest.getEmail(),
                 userCreateRequest.getFirstName(),
-                userCreateRequest.getLastName());
+                userCreateRequest.getLastName(),
+                userCreateRequest.getRole());
+
         dal.addAccount(user);
     }
 

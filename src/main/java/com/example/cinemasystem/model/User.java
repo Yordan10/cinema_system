@@ -26,11 +26,14 @@ public abstract class User {
     @Getter @Setter
     protected   String lastName;
 
+    @Getter @Setter
+    protected   String role;
+
     public  User() {
 
     }
 
-    public User(int id,String username, String password,String email, String fName,String lName)
+    public User(int id,String username, String password,String email, String fName,String lName, String role)
     {
         this.id=id;
         this.username=username;
@@ -38,6 +41,7 @@ public abstract class User {
         this.email=email;
         this.firstName=fName;
         this.lastName=lName;
+        this.role=role;
 
     }
 

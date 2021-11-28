@@ -6,7 +6,10 @@ import com.example.cinemasystem.ServiceInterfaces.IMovie;
 import com.example.cinemasystem.ServiceInterfaces.IMovieService;
 import com.example.cinemasystem.model.Movie;
 import com.example.cinemasystem.Enums.Genre;
+import com.example.cinemasystem.model.Trailer;
+import com.example.cinemasystem.model.request.MovieCreateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +45,7 @@ public class MovieController {
         return movieService.ReturnMovieById(id);
     }
 
+
     @PostMapping("/upload/photo")
     public ResponseEntity UploadPhoto(@RequestParam("file") MultipartFile file)
     {
@@ -74,5 +78,18 @@ public class MovieController {
         return ResponseEntity.ok()
                 .contentLength(inputStream.contentLength())
                 .body(inputStream);
+    }
+
+    @GetMapping("/trailer/{id}")
+    public ResponseEntity<Trailer> GetTrailerCharityById(@PathVariable(value = "id") int id)
+    {
+        return movieService.ReturnTrailerOfMovieById(id);
+    }
+
+    @PostMapping("addMovie")
+    public ResponseEntity AddMovie (@RequestBody MovieCreateRequest movieCreateRequest)
+    {
+        movieService.AddMovie(movieCreateRequest);
+        return ResponseEntity.ok().build();
     }
 }

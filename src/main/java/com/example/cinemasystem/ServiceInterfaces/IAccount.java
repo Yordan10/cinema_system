@@ -19,4 +19,7 @@ public interface IAccount {
 
     public String getLastName();
     public void setLastName(String lastName);
+
+    public String getRole();
+    public void setRole(String role);
 }

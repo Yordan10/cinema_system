@@ -24,4 +24,7 @@ public class UserCreateRequest {
 
     @Getter @Setter
     protected   String lastName;
+
+    @Getter @Setter
+    protected   String role;
 }

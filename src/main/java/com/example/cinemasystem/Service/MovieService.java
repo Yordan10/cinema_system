@@ -6,6 +6,8 @@ import com.example.cinemasystem.ServiceInterfaces.IMovieService;
 import com.example.cinemasystem.model.Movie;
 
 import com.example.cinemasystem.Enums.Genre;
+import com.example.cinemasystem.model.Trailer;
+import com.example.cinemasystem.model.request.MovieCreateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,4 +71,23 @@ public class MovieService implements IMovieService {
         }
     }
 
+    @Override
+    public ResponseEntity<Trailer> ReturnTrailerOfMovieById(int id)
+    {
+        Trailer trailer = dal.getTrailerByMovieId(id);
+        if (trailer==null)
+        {
+            return ResponseEntity.notFound().build();
+        }
+        else
+        {
+            return  ResponseEntity.ok().body(trailer);
+        }
+    }
+
+    @Override
+    public void AddMovie(MovieCreateRequest movieCreateRequest)
+    {
+        dal.AddMovie(movieCreateRequest);
+    }
 }
