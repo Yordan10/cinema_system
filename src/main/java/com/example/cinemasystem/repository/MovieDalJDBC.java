@@ -22,9 +22,9 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
         ArrayList<IMovie> movies = new ArrayList<IMovie>();
         Connection connection = this.getDatabaseConnection();
         String sql = "SELECT * from individual_project.movie";
-
+        Statement statement = null;
         try{
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
 
 
@@ -47,6 +47,10 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
         }
         finally {
             try{
+                if(statement!=null)
+                {
+                    statement.close();
+                }
                 connection.commit();
                 connection.close();
 
@@ -64,8 +68,9 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
         String sql = "SELECT * from individual_project.movie WHERE ID = ?" ;
         Connection connection = this.getDatabaseConnection();
         IMovie movie = null;
+        PreparedStatement statement = null;
         try{
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setInt(1,id);
 
             ResultSet resultSet = statement.executeQuery();
@@ -80,6 +85,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
             String director = resultSet.getString("director");
 
             movie = new Movie(movieId,title,description,length,Genre.valueOf(genre),rating,director);
+
         }
         catch (SQLException throwable)
         {
@@ -87,6 +93,10 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
         }
         finally {
             try{
+                if(statement!=null)
+                {
+                    statement.close();
+                }
                 connection.commit();
                 connection.close();
 
@@ -103,9 +113,10 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
         String sql = "SELECT ID from individual_project.movie WHERE title = ?" ;
         Connection connection = this.getDatabaseConnection();
+        PreparedStatement statement = null;
         int movieId = 0;
         try{
-            PreparedStatement statement = connection.prepareStatement(sql);
+             statement = connection.prepareStatement(sql);
             statement.setString(1,title);
 
             ResultSet resultSet = statement.executeQuery();
@@ -120,6 +131,10 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
         }
         finally {
             try{
+                if(statement!=null)
+                {
+                    statement.close();
+                }
                 connection.commit();
                 connection.close();
 
@@ -136,8 +151,9 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
         String sql = "SELECT * from individual_project.movie_photo WHERE movie_id = ?";
         Connection connection = this.getDatabaseConnection();
         String path = "";
+        PreparedStatement statement = null;
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+             statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
 
             ResultSet resultSet = statement.executeQuery();
@@ -151,6 +167,10 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
         finally {
             try{
+                if(statement!=null)
+                {
+                    statement.close();
+                }
                 connection.commit();
                 connection.close();
 
@@ -167,9 +187,9 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
         String sql = "SELECT * from movie_trailers WHERE movie_id = ?";
         Connection connection = this.getDatabaseConnection();
         Trailer trailer = null;
-
+        PreparedStatement statement = null;
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+             statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
 
             ResultSet resultSet = statement.executeQuery();
@@ -187,6 +207,10 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
         finally {
             try{
+                if(statement!=null)
+                {
+                    statement.close();
+                }
                 connection.commit();
                 connection.close();
 
@@ -204,8 +228,9 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
         Connection connection = this.getDatabaseConnection();
         String sql = "INSERT INTO individual_project.movie (`title`, `description`, `length`, `genre`, `rating`, `director`) VALUES (?,?,?,?,?,?)";
         boolean bool = false;
+        PreparedStatement statement = null;
         try{
-            PreparedStatement statement = connection.prepareStatement(sql);
+             statement = connection.prepareStatement(sql);
             statement.setString(1,movieCreateRequest.getTitle());
             statement.setString(2,movieCreateRequest.getDescription());
             statement.setDouble(3,movieCreateRequest.getLength());
@@ -221,6 +246,10 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
         finally {
             try{
+                if(statement!=null)
+                {
+                    statement.close();
+                }
                 connection.commit();
                 connection.close();
 
@@ -239,8 +268,9 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
         Connection connection = this.getDatabaseConnection();
         String sql = "INSERT INTO individual_project.movie_trailers (`movie_id`,`link`) VALUES (?,?)";
         boolean bool= false;
+        PreparedStatement statement = null;
         try{
-            PreparedStatement statement = connection.prepareStatement(sql);
+             statement = connection.prepareStatement(sql);
             statement.setInt(1,movieId);
             statement.setString(2,trailer);
 
@@ -251,6 +281,10 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
         finally {
             try{
+                if(statement!=null)
+                {
+                    statement.close();
+                }
                 connection.commit();
                 connection.close();
 
@@ -267,10 +301,10 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
     {
         Connection connection = this.getDatabaseConnection();
         String sql = "INSERT INTO individual_project.movie_photo (`movie_id`,`photo_path`) VALUES (?,?)";
-
+        PreparedStatement statement = null;
         boolean bool = false;
         try{
-            PreparedStatement statement = connection.prepareStatement(sql);
+             statement = connection.prepareStatement(sql);
             statement.setInt(1,movieId);
             statement.setString(2,path);
 
@@ -281,6 +315,10 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
         finally {
             try{
+                if(statement!=null)
+                {
+                    statement.close();
+                }
                 connection.commit();
                 connection.close();
 
@@ -297,9 +335,9 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
     {
         Connection connection = this.getDatabaseConnection();
         String sql = "DELETE FROM individual_project.movie WHERE ID = ? ";
-
+        PreparedStatement statement = null;
         try{
-            PreparedStatement statement = connection.prepareStatement(sql);
+             statement = connection.prepareStatement(sql);
             statement.setInt(1,movieId);
 
             statement.executeUpdate();
@@ -308,6 +346,10 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
         finally {
             try{
+                if(statement!=null)
+                {
+                    statement.close();
+                }
                 connection.commit();
                 connection.close();
 
@@ -323,9 +365,9 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
     {
         Connection connection = this.getDatabaseConnection();
         String sql = "DELETE FROM individual_project.movie_photo WHERE movie_id = ? ";
-
+        PreparedStatement statement = null;
         try{
-            PreparedStatement statement = connection.prepareStatement(sql);
+             statement = connection.prepareStatement(sql);
             statement.setInt(1,movieId);
 
             statement.executeUpdate();
@@ -334,6 +376,10 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
         finally {
             try{
+                if(statement!=null)
+                {
+                    statement.close();
+                }
                 connection.commit();
                 connection.close();
 
@@ -351,8 +397,9 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
         Connection connection = this.getDatabaseConnection();
         String sql = "DELETE FROM individual_project.movie_trailers WHERE movie_id = ? ";
 
+        PreparedStatement statement = null;
         try{
-            PreparedStatement statement = connection.prepareStatement(sql);
+             statement = connection.prepareStatement(sql);
             statement.setInt(1,movieId);
 
             statement.executeUpdate();
@@ -361,6 +408,10 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
         finally {
             try{
+                if(statement!=null)
+                {
+                    statement.close();
+                }
                 connection.commit();
                 connection.close();
 

@@ -17,10 +17,10 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
         ArrayList<IAccount> accounts = new ArrayList<IAccount>();
         Connection connection = this.getDatabaseConnection();
         String sql = "SELECT * from individual_project.user";
-
+        Statement statement = null;
         try {
 
-            Statement statement = connection.createStatement();
+             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
 
 
@@ -41,6 +41,10 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
 
         finally {
             try{
+                if(statement!=null)
+                {
+                    statement.close();
+                }
                 connection.commit();
                 connection.close();
             }
@@ -58,9 +62,10 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
         String sql = "SELECT * from individual_project.user WHERE ID = ?" ;
         Connection connection = this.getDatabaseConnection();
         IAccount account = null;
+        PreparedStatement statement = null;
         try {
 
-            PreparedStatement statement = connection.prepareStatement(sql);
+             statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
 
             ResultSet resultSet = statement.executeQuery();
@@ -84,6 +89,10 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
 
         finally {
             try{
+                if(statement!=null)
+                {
+                    statement.close();
+                }
                 connection.commit();
                 connection.close();
             }
@@ -100,10 +109,10 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
 
         String sql = "SELECT * from  individual_project.user WHERE username = ?" ;
         Connection connection = this.getDatabaseConnection();
-
+        PreparedStatement statement = null;
         try {
 
-            PreparedStatement statement = connection.prepareStatement(sql);
+             statement = connection.prepareStatement(sql);
             statement.setString(1, username);
 
             ResultSet resultSet = statement.executeQuery();
@@ -125,6 +134,10 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
 
         finally {
             try{
+                if(statement!=null)
+                {
+                    statement.close();
+                }
                 connection.commit();
                 connection.close();
             }
@@ -141,9 +154,9 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
     public boolean addAccount(IAccount account) {
         Connection connection = this.getDatabaseConnection();
         String sql = "INSERT INTO   individual_project.user ( `ID`,`username`, `password`, `email` ,`first_name`, `last_name`, `role`) VALUES ( null, ?, ?, ?, ?, ?,?);";
-
+        PreparedStatement statement = null;
         try {
-            PreparedStatement statement = connection.prepareStatement(sql);
+             statement = connection.prepareStatement(sql);
 
             statement.setString(1, account.getUsername());
             statement.setString(2, account.getPassword());
@@ -161,6 +174,10 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
 
         finally {
             try{
+                if(statement!=null)
+                {
+                    statement.close();
+                }
                 connection.commit();
                 connection.close();
             }
