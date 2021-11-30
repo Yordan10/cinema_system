@@ -1,6 +1,8 @@
 package com.example.cinemasystem.Service;
 
+import com.example.cinemasystem.DALInterfaces.IMovieDAL;
 import com.example.cinemasystem.ServiceInterfaces.IFileStorageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,32 +18,42 @@ public class FileStorageService implements IFileStorageService {
     private final Path root = Paths.get("photos");
 
 
+    IMovieDAL dal;
+
+    @Autowired
+    public FileStorageService(IMovieDAL dal)
+    {
+        this.dal = dal;
+    }
     @Override
-    public void save(MultipartFile file) {
+    public void save(MultipartFile file,String title) {
         try {
-            System.out.println(file.getOriginalFilename());
+
             Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
+           int id= dal.getMovieIdByTitle(title);
+           dal.AddPosterToMovie(file.getOriginalFilename(), id);
+
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
-    }
 
-    /*@Override
-    public File load(String filename) {
-
-      //  Path file = root.resolve(filename);
-
-        File file1 =  new File(filename);
-        return file1;
 
     }
     @Override
-    public Stream<Path> loadAll() {
-        try {
-            return Files.walk(this.root, 1).filter(path -> !path.equals(this.root)).map(this.root::relativize);
-        } catch (IOException e) {
-            throw new RuntimeException("Could not load the files!");
+    public void delete(String path)
+    {
+        try{
+            Path test = Paths.get("/photos/"+ path);
+            String directory = new File("./" ).getCanonicalPath() + test;
+            Path finalPath = Paths.get(directory);
+
+            Files.delete(finalPath);
         }
-    }*/
+        catch (Exception ex){ex.getMessage();}
+
+
+    }
+
+
 
 }

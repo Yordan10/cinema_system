@@ -1,15 +1,11 @@
 package com.example.cinemasystem.controller;
 
 import com.example.cinemasystem.Service.FileStorageService;
-import com.example.cinemasystem.Service.MovieService;
 import com.example.cinemasystem.ServiceInterfaces.IMovie;
 import com.example.cinemasystem.ServiceInterfaces.IMovieService;
-import com.example.cinemasystem.model.Movie;
-import com.example.cinemasystem.Enums.Genre;
 import com.example.cinemasystem.model.Trailer;
 import com.example.cinemasystem.model.request.MovieCreateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +35,8 @@ public class MovieController {
         return movieService.ReturnAllMovies();
     }
 
+
+
     @GetMapping("{id}")
     public ResponseEntity<IMovie> GetMovieById(@PathVariable(value = "id") int id)
     {
@@ -46,11 +44,12 @@ public class MovieController {
     }
 
 
-    @PostMapping("/upload/photo")
-    public ResponseEntity UploadPhoto(@RequestParam("file") MultipartFile file)
+    @PostMapping("/upload/photo/{title}")
+    public ResponseEntity UploadPhoto(@RequestParam(value = "file") MultipartFile file,@PathVariable(value = "title") String title)
     {
         try{
-            storageService.save(file);
+            storageService.save(file,title);
+
             return ResponseEntity.ok().body("File uploaded");
         }
         catch (Exception e)
@@ -60,24 +59,26 @@ public class MovieController {
 
     }
 
+
+
     @GetMapping("/photo/{id}")
     public ResponseEntity<Resource> GetMoviePhotoById(@PathVariable(value = "id") int id)
     {
         String filename =  movieService.ReturnPhotoOfMovieByID(id);
-
         ByteArrayResource inputStream = null;
-
         try{
             String directory = new File("./" ).getCanonicalPath() + "/photos/" + filename;
 
             inputStream = new ByteArrayResource(Files.readAllBytes(Paths.get(
                     directory)));
+            return ResponseEntity.ok()
+                    .contentLength(inputStream.contentLength())
+                    .body(inputStream);
+
         }
         catch (Exception e){}
 
-        return ResponseEntity.ok()
-                .contentLength(inputStream.contentLength())
-                .body(inputStream);
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/trailer/{id}")
@@ -90,6 +91,13 @@ public class MovieController {
     public ResponseEntity AddMovie (@RequestBody MovieCreateRequest movieCreateRequest)
     {
         movieService.AddMovie(movieCreateRequest);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/delete/{id}")
+    public ResponseEntity DeleteMovie (@PathVariable(value = "id") int id)
+    {
+        movieService.DeleteMovie(id);
         return ResponseEntity.ok().build();
     }
 }

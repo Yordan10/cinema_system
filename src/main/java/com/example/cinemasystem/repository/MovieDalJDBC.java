@@ -11,12 +11,13 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
     @Override
-    public ArrayList<IMovie> getAllMovies()
+    public List<IMovie> getAllMovies()
     {
         ArrayList<IMovie> movies = new ArrayList<IMovie>();
         Connection connection = this.getDatabaseConnection();
@@ -48,9 +49,10 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
             try{
                 connection.commit();
                 connection.close();
+
             }
             catch (SQLException throwable){
-                System.out.println("Can't close connection");
+                System.out.println("Can't close connection4");
             }
         }
         return movies;
@@ -81,18 +83,52 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
         }
         catch (SQLException throwable)
         {
-            System.out.println("Can't connect to database");
+            System.out.println("Can't connect to database3");
         }
         finally {
             try{
                 connection.commit();
                 connection.close();
+
             }
             catch (SQLException throwable){
                 System.out.println("Can't close connection");
             }
         }
         return movie;
+    }
+
+    @Override
+    public int getMovieIdByTitle (String title){
+
+        String sql = "SELECT ID from individual_project.movie WHERE title = ?" ;
+        Connection connection = this.getDatabaseConnection();
+        int movieId = 0;
+        try{
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1,title);
+
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+
+             movieId = resultSet.getInt("ID");
+
+        }
+        catch (SQLException throwable)
+        {
+            System.out.println("Can't connect to database2");
+        }
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
+        }
+        return movieId;
     }
     @Override
     public String getPhotoByMovieId(int id) {
@@ -111,12 +147,13 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
 
 
-        } catch (SQLException throwable) {System.out.println("Can't connect to database");}
+        } catch (SQLException throwable) {System.out.println("Can't connect to database1");}
 
         finally {
             try{
                 connection.commit();
                 connection.close();
+
             }
             catch (SQLException throwable){
                 System.out.println("Can't close connection");
@@ -152,6 +189,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
             try{
                 connection.commit();
                 connection.close();
+
             }
             catch (SQLException throwable){
                 System.out.println("Can't close connection");
@@ -161,11 +199,11 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
     }
     @Override
-    public void AddMovie(MovieCreateRequest movieCreateRequest)
+    public boolean AddMovie(MovieCreateRequest movieCreateRequest)
     {
         Connection connection = this.getDatabaseConnection();
         String sql = "INSERT INTO individual_project.movie (`title`, `description`, `length`, `genre`, `rating`, `director`) VALUES (?,?,?,?,?,?)";
-
+        boolean bool = false;
         try{
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1,movieCreateRequest.getTitle());
@@ -177,6 +215,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
 
             statement.executeUpdate();
+            bool=true;
         }
         catch (SQLException throwable){throwable.toString();}
 
@@ -184,6 +223,147 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
             try{
                 connection.commit();
                 connection.close();
+
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
+        }
+        return bool;
+
+    }
+
+    @Override
+    public boolean AddTrailerToMovie(int movieId,String trailer)
+    {
+        Connection connection = this.getDatabaseConnection();
+        String sql = "INSERT INTO individual_project.movie_trailers (`movie_id`,`link`) VALUES (?,?)";
+        boolean bool= false;
+        try{
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,movieId);
+            statement.setString(2,trailer);
+
+            statement.executeUpdate();
+            bool=true;
+        }
+        catch (SQLException throwable){throwable.toString();}
+
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
+        }
+        return bool;
+
+    }
+    @Override
+    public boolean AddPosterToMovie(String path,int movieId)
+    {
+        Connection connection = this.getDatabaseConnection();
+        String sql = "INSERT INTO individual_project.movie_photo (`movie_id`,`photo_path`) VALUES (?,?)";
+
+        boolean bool = false;
+        try{
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,movieId);
+            statement.setString(2,path);
+
+            statement.executeUpdate();
+            bool = true;
+        }
+        catch (SQLException throwable){throwable.toString();}
+
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
+        }
+        return bool;
+    }
+
+    @Override
+    public void DeleteMovie(int movieId)
+    {
+        Connection connection = this.getDatabaseConnection();
+        String sql = "DELETE FROM individual_project.movie WHERE ID = ? ";
+
+        try{
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,movieId);
+
+            statement.executeUpdate();
+        }
+        catch (SQLException throwable){throwable.toString();}
+
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
+        }
+
+    }
+    @Override
+    public void DeletePosterOfMovie(int movieId)
+    {
+        Connection connection = this.getDatabaseConnection();
+        String sql = "DELETE FROM individual_project.movie_photo WHERE movie_id = ? ";
+
+        try{
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,movieId);
+
+            statement.executeUpdate();
+        }
+        catch (SQLException throwable){throwable.toString();}
+
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
+        }
+
+    }
+
+    @Override
+    public void DeleteTrailerOfMovie(int movieId)
+    {
+        Connection connection = this.getDatabaseConnection();
+        String sql = "DELETE FROM individual_project.movie_trailers WHERE movie_id = ? ";
+
+        try{
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1,movieId);
+
+            statement.executeUpdate();
+        }
+        catch (SQLException throwable){throwable.toString();}
+
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+
             }
             catch (SQLException throwable){
                 System.out.println("Can't close connection");

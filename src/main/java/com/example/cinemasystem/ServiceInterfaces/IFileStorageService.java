@@ -8,7 +8,8 @@ import java.nio.file.Path;
 
 public interface IFileStorageService {
 
-    public void save(MultipartFile file);
+    public void save(MultipartFile file, String title);
+    void delete(String path);
 
 
 }

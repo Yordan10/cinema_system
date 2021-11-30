@@ -7,11 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
     @Override
-    public ArrayList<IAccount> getAllAccounts() {
+    public List<IAccount> getAllAccounts() {
 
         ArrayList<IAccount> accounts = new ArrayList<IAccount>();
         Connection connection = this.getDatabaseConnection();
@@ -137,7 +138,7 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
 
 
     @Override
-    public void addAccount(IAccount account) {
+    public boolean addAccount(IAccount account) {
         Connection connection = this.getDatabaseConnection();
         String sql = "INSERT INTO   individual_project.user ( `ID`,`username`, `password`, `email` ,`first_name`, `last_name`, `role`) VALUES ( null, ?, ?, ?, ?, ?,?);";
 
@@ -154,7 +155,7 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
 
 
             statement.executeUpdate();
-
+            return true;
 
         } catch (SQLException throwable) {System.out.println("Cant add userAccount to database");}
 
@@ -167,5 +168,6 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
                 System.out.println("Can't close connection");
             }
         }
+        return false;
     }
 }

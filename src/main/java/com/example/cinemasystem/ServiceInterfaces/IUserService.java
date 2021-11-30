@@ -12,6 +12,6 @@ public interface IUserService {
 
     ResponseEntity<IAccount> ReturnAccountByID(int id);
     ResponseEntity<List<IAccount>>ReturnAllAccounts();
-    void UserRegistration(UserCreateRequest userCreateRequest);
+    boolean UserRegistration(UserCreateRequest userCreateRequest);
     ResponseEntity<IAccount> ReturnAccountByUsername(String username);
 }

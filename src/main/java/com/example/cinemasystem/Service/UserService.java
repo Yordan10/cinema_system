@@ -49,7 +49,7 @@ public class UserService implements IUserService {
 
 
     @Override
-    public void UserRegistration(UserCreateRequest userCreateRequest) {
+    public boolean UserRegistration(UserCreateRequest userCreateRequest) {
 
         IAccount user;
         Optional<IAccount> byUsername = Optional.ofNullable(dal.getAccountByUsername(userCreateRequest.getUsername()));
@@ -65,6 +65,7 @@ public class UserService implements IUserService {
                 userCreateRequest.getRole());
 
         dal.addAccount(user);
+        return true;
     }
 
 

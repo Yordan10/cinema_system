@@ -15,6 +15,7 @@ public interface IMovieService {
     ResponseEntity<IMovie> ReturnMovieById(int id);
     String ReturnPhotoOfMovieByID(int id);
     ResponseEntity<Trailer> ReturnTrailerOfMovieById(int id);
-    void AddMovie(MovieCreateRequest movieCreateRequest);
+    boolean AddMovie(MovieCreateRequest movieCreateRequest);
+    void DeleteMovie(int id);
 
 }

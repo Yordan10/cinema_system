@@ -28,4 +28,7 @@ public class MovieCreateRequest {
 
     @Getter @Setter
     protected   String director;
+
+    @Getter @Setter
+    protected String trailer;
 }
