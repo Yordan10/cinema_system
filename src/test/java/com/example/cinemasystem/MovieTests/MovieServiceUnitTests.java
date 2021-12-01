@@ -42,6 +42,7 @@ public class MovieServiceUnitTests {
         when(movieDalJDBC.getMovieById(id))
                 .thenReturn(movie);
 
+        //assert
         Assertions.assertEquals(new ResponseEntity(movie, HttpStatus.OK),movieService.ReturnMovieById(id));
     }
 
