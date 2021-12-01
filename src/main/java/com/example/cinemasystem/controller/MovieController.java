@@ -5,6 +5,7 @@ import com.example.cinemasystem.ServiceInterfaces.IMovie;
 import com.example.cinemasystem.ServiceInterfaces.IMovieService;
 import com.example.cinemasystem.model.Trailer;
 import com.example.cinemasystem.model.request.MovieCreateRequest;
+import com.example.cinemasystem.model.request.MovieEditRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -91,6 +92,13 @@ public class MovieController {
     public ResponseEntity AddMovie (@RequestBody MovieCreateRequest movieCreateRequest)
     {
         movieService.AddMovie(movieCreateRequest);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("editMovie")
+    public ResponseEntity EditMovie(@RequestBody MovieEditRequest movieEditRequest)
+    {
+        movieService.EditMovie(movieEditRequest);
         return ResponseEntity.ok().build();
     }
 

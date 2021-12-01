@@ -9,6 +9,7 @@ import com.example.cinemasystem.model.Movie;
 import com.example.cinemasystem.Enums.Genre;
 import com.example.cinemasystem.model.Trailer;
 import com.example.cinemasystem.model.request.MovieCreateRequest;
+import com.example.cinemasystem.model.request.MovieEditRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -102,6 +103,17 @@ public class MovieService implements IMovieService {
         {
             bool = true;
         }
+        return bool;
+    }
+
+    @Override
+    public boolean EditMovie(MovieEditRequest movieEditRequest)
+    {
+        boolean bool = false;
+       if(dal.EditPosterOfMovie(movieEditRequest)){
+        bool = true;
+       }
+
         return bool;
     }
     @Override

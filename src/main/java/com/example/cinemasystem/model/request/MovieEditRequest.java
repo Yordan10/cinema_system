@@ -7,22 +7,13 @@ import lombok.Setter;
 
 @Data
 @Getter @Setter
-public class MovieCreateRequest {
+public class MovieEditRequest {
 
     protected int id;
-
-
     protected   String title;
-
     protected   String description;
-
     protected  Double length;
-
     protected Genre genre;
-
     protected   Double rating;
-
     protected   String director;
-
-    protected String trailer;
 }

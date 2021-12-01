@@ -7,6 +7,7 @@ import com.example.cinemasystem.ServiceInterfaces.IMovie;
 import com.example.cinemasystem.model.Movie;
 import com.example.cinemasystem.model.Trailer;
 import com.example.cinemasystem.model.request.MovieCreateRequest;
+import com.example.cinemasystem.model.request.MovieEditRequest;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -389,6 +390,46 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
             }
         }
 
+    }
+    @Override
+    public boolean EditPosterOfMovie(MovieEditRequest movieEditRequest)
+    {
+        boolean bool=false;
+        Connection connection = this.getDatabaseConnection();
+        String sql = "UPDATE  individual_project.movie SET `title`= ?,`description`=?,`length`=?,`genre`=?,`rating`=?,`director`=? WHERE `ID` = ? ";
+        PreparedStatement statement = null;
+        try{
+            statement = connection.prepareStatement(sql);
+            statement.setString(1,movieEditRequest.getTitle());
+            statement.setString(2,movieEditRequest.getDescription());
+            statement.setDouble(3,movieEditRequest.getLength());
+            statement.setString(4,movieEditRequest.getGenre().toString());
+            statement.setDouble(5,movieEditRequest.getRating());
+            statement.setString(6,movieEditRequest.getDirector());
+            statement.setInt(7,movieEditRequest.getId());
+
+
+            statement.executeUpdate();
+            bool=true;
+        }
+        catch (SQLException throwable){throwable.toString();}
+
+        finally {
+            try{
+                if(statement!=null)
+                {
+                    statement.close();
+                }
+                connection.commit();
+                connection.close();
+
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
+        }
+
+        return bool;
     }
 
     @Override
