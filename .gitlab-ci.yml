@@ -24,6 +24,5 @@ sonarQube:
 docker:
   stage: docker
   script:
-    - java -jar .\build\libs\CinemaSystem-0.0.1-SNAPSHOT.jar
-    - docker build --build-arg JAR_FILE=build/libs/*.jar -t springio/cs-spring-boot-docker .
+    - docker build --build-arg JAR_FILE="build/libs/*.jar" -t springio/cs-spring-boot-docker .
 
