@@ -2,6 +2,7 @@ stages:
   - assemble       
   - test
   - sonarQube
+  - docker
  
 
 assemble:
@@ -20,5 +21,8 @@ sonarQube:
  script:
  - ./gradlew sonarqube -D "sonar.projectKey=back-end-cinema-system" -D "sonar.host.url=http://localhost:9000" -D "sonar.login=31aa55b3231133aa6b48d5f8f633d2ef38f15a82"
 
-    
+docker:
+  stage: docker
+  script:
+    - docker build --build-arg JAR_FILE=build/libs/*.jar -t springio/cs-spring-boot-docker .
 
