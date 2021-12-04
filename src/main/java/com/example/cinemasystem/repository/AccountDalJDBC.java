@@ -82,8 +82,6 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
             account = new UserAccount(accountId, username, password,email,firstName,lastName,role);
 
 
-            connection.commit();
-            connection.close();
 
         } catch (SQLException throwable) {System.out.println("Can't get account by id");}
 

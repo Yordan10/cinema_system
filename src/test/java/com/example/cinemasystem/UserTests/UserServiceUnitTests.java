@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserServiceUnitTests {
-    @Autowired
+   @Autowired
     UserService userService;
 
     @MockBean
@@ -41,14 +41,14 @@ public class UserServiceUnitTests {
 
         when(accountDalJDBC.getAllAccounts()).thenReturn(Stream.of(user)
                 .collect(Collectors.toList()));
-        Assertions.assertEquals(new ResponseEntity(users, HttpStatus.OK),userService.ReturnAllAccounts());
+        Assertions.assertEquals(new ResponseEntity(users, HttpStatus.OK),userService.returnAllAccounts());
 
     }
     @Test
      void getAllAccountsFailTest()  {
 
         when(accountDalJDBC.getAllAccounts()).thenReturn(null);
-        Assertions.assertEquals(new ResponseEntity(HttpStatus.NOT_FOUND),userService.ReturnAllAccounts());
+        Assertions.assertEquals(new ResponseEntity(HttpStatus.NOT_FOUND),userService.returnAllAccounts());
 
     }
     @Test
@@ -60,7 +60,7 @@ public class UserServiceUnitTests {
         when(accountDalJDBC.getAccountById(id))
                 .thenReturn(user);
 
-        Assertions.assertEquals(new ResponseEntity(user, HttpStatus.OK),userService.ReturnAccountByID(id));
+        Assertions.assertEquals(new ResponseEntity(user, HttpStatus.OK),userService.returnAccountByID(id));
 
     }
     @Test
@@ -71,7 +71,7 @@ public class UserServiceUnitTests {
         when(accountDalJDBC.getAccountById(id))
                 .thenReturn(null);
 
-        Assertions.assertEquals(new ResponseEntity(HttpStatus.NOT_FOUND),userService.ReturnAccountByID(id));
+        Assertions.assertEquals(new ResponseEntity(HttpStatus.NOT_FOUND),userService.returnAccountByID(id));
 
 
     }
@@ -85,7 +85,7 @@ public class UserServiceUnitTests {
         when(accountDalJDBC.getAccountByUsername(username))
                 .thenReturn(user);
 
-        Assertions.assertEquals(user.getId(),userService.GetAccountByUsername(username).getId());
+        Assertions.assertEquals(user.getId(),userService.getAccountByUsername(username).getId());
 
     }
     @Test
@@ -97,7 +97,7 @@ public class UserServiceUnitTests {
         when(accountDalJDBC.getAccountByUsername(username))
                 .thenReturn(user);
 
-        Assertions.assertEquals(new ResponseEntity(user, HttpStatus.OK),userService.ReturnAccountByUsername(username));
+        Assertions.assertEquals(new ResponseEntity(user, HttpStatus.OK),userService.returnAccountByUsername(username));
 
     }
     @Test
@@ -107,7 +107,7 @@ public class UserServiceUnitTests {
         when(accountDalJDBC.getAccountByUsername(username))
                 .thenReturn(null);
 
-        Assertions.assertEquals(new ResponseEntity(HttpStatus.NOT_FOUND),userService.ReturnAccountByUsername(username));
+        Assertions.assertEquals(new ResponseEntity(HttpStatus.NOT_FOUND),userService.returnAccountByUsername(username));
 
     }
     @Test
@@ -125,6 +125,6 @@ public class UserServiceUnitTests {
 
         when(accountDalJDBC.addAccount(user)).thenReturn(true);
 
-        Assertions.assertEquals(true,userService.UserRegistration(userCreateRequest));
+        Assertions.assertEquals(true,userService.userRegistration(userCreateRequest));
     }
 }

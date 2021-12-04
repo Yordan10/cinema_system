@@ -4,21 +4,16 @@ import com.example.cinemasystem.DALInterfaces.IMovieDAL;
 import com.example.cinemasystem.ServiceInterfaces.IFileStorageService;
 import com.example.cinemasystem.ServiceInterfaces.IMovie;
 import com.example.cinemasystem.ServiceInterfaces.IMovieService;
-import com.example.cinemasystem.model.Movie;
 
-import com.example.cinemasystem.Enums.Genre;
 import com.example.cinemasystem.model.Trailer;
 import com.example.cinemasystem.model.request.MovieCreateRequest;
 import com.example.cinemasystem.model.request.MovieEditRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-
-import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class MovieService implements IMovieService {
@@ -36,20 +31,13 @@ public class MovieService implements IMovieService {
 
 
     @Override
-    public ResponseEntity<List<IMovie>> ReturnAllMovies()
+    public CompletableFuture<List<IMovie>> returnAllMovies()
     {
-        if (dal.getAllMovies() == null)
-        {
-            return ResponseEntity.notFound().build();
-        }
-        else
-        {
-            return ResponseEntity.ok().body(dal.getAllMovies());
-        }
+        return CompletableFuture.completedFuture(dal.getAllMovies());
 
     }
     @Override
-    public ResponseEntity<IMovie> ReturnMovieById(int id)
+    public ResponseEntity<IMovie> returnMovieById(int id)
     {
         IMovie movie = dal.getMovieById(id);
         if (movie == null)
@@ -62,7 +50,7 @@ public class MovieService implements IMovieService {
         }
     }
     @Override
-    public String ReturnPhotoOfMovieByID(int id)
+    public String returnPhotoOfMovieByID(int id)
     {
         String path = dal.getPhotoByMovieId(id);
         if (path.equals(""))
@@ -76,7 +64,7 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public ResponseEntity<Trailer> ReturnTrailerOfMovieById(int id)
+    public ResponseEntity<Trailer> returnTrailerOfMovieById(int id)
     {
         Trailer trailer = dal.getTrailerByMovieId(id);
         if (trailer==null)
@@ -90,16 +78,16 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public boolean AddMovie(MovieCreateRequest movieCreateRequest)
+    public boolean addMovie(MovieCreateRequest movieCreateRequest)
     {
 
         boolean bool = false;
-        if(dal.AddMovie(movieCreateRequest)){
+        if(dal.addMovie(movieCreateRequest)){
             bool= true;
         }
         int id = dal.getMovieIdByTitle(movieCreateRequest.getTitle());
 
-        if ( dal.AddTrailerToMovie(id, movieCreateRequest.getTrailer()))
+        if ( dal.addTrailerToMovie(id, movieCreateRequest.getTrailer()))
         {
             bool = true;
         }
@@ -107,21 +95,21 @@ public class MovieService implements IMovieService {
     }
 
     @Override
-    public boolean EditMovie(MovieEditRequest movieEditRequest)
+    public boolean editMovie(MovieEditRequest movieEditRequest)
     {
         boolean bool = false;
-       if(dal.EditPosterOfMovie(movieEditRequest)){
+       if(dal.editPosterOfMovie(movieEditRequest)){
         bool = true;
        }
 
         return bool;
     }
     @Override
-    public void DeleteMovie(int id){
+    public void deleteMovie(int id){
         String photoPath =  dal.getPhotoByMovieId(id);
-        dal.DeleteMovie(id);
-        dal.DeletePosterOfMovie(id);
-        dal.DeleteTrailerOfMovie(id);
+        dal.deleteMovie(id);
+        dal.deletePosterOfMovie(id);
+        dal.deleteTrailerOfMovie(id);
         fileStorageService.delete(photoPath);
 
 

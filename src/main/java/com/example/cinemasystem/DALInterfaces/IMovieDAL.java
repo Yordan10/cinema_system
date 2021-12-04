@@ -5,7 +5,6 @@ import com.example.cinemasystem.model.Trailer;
 import com.example.cinemasystem.model.request.MovieCreateRequest;
 import com.example.cinemasystem.model.request.MovieEditRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface IMovieDAL {
@@ -13,12 +12,12 @@ public interface IMovieDAL {
     IMovie getMovieById(int id);
     String getPhotoByMovieId(int id);
     Trailer getTrailerByMovieId(int id);
-    boolean AddMovie(MovieCreateRequest movieCreateRequest);
+    boolean addMovie(MovieCreateRequest movieCreateRequest);
     int getMovieIdByTitle (String title);
-    boolean AddTrailerToMovie(int movieId,String trailer);
-    boolean AddPosterToMovie(String path,int movieId);
-    boolean EditPosterOfMovie(MovieEditRequest movieEditRequest);
-    void DeleteMovie(int movieId);
-    void DeletePosterOfMovie(int movieId);
-    void DeleteTrailerOfMovie(int movieId);
+    boolean addTrailerToMovie(int movieId,String trailer);
+    boolean addPosterToMovie(String path,int movieId);
+    boolean editPosterOfMovie(MovieEditRequest movieEditRequest);
+    void deleteMovie(int movieId);
+    void deletePosterOfMovie(int movieId);
+    void deleteTrailerOfMovie(int movieId);
 }

@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 
@@ -23,7 +22,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override protected void configure(HttpSecurity http) throws Exception {
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and().csrf().disable();
-        http.cors().and().csrf().disable().authorizeRequests()
+        http.cors().and().authorizeRequests()
                 .antMatchers(HttpMethod.POST, AuthenticationConfigConstants.SIGN_UP_URL).permitAll()
                 //ROLE BASED AUTHENTICATION START
             //    .antMatchers("/account").hasAnyAuthority("USER")
@@ -36,8 +35,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
                 .antMatchers(HttpMethod.DELETE,"/movies/delete").permitAll()
-//            .antMatchers("/api/library/author/**").hasAnyAuthority("ADMIN")
-//            .antMatchers("/api/library/member/**").hasAnyAuthority("ADMIN")
                 //ROLE BASED AUTHENTICATION END
                 .anyRequest().authenticated()
                 .and()

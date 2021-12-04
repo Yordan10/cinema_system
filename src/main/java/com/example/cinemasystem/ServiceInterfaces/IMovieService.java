@@ -9,15 +9,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public interface IMovieService {
 
-    ResponseEntity<List<IMovie>> ReturnAllMovies();
-    ResponseEntity<IMovie> ReturnMovieById(int id);
-    String ReturnPhotoOfMovieByID(int id);
-    ResponseEntity<Trailer> ReturnTrailerOfMovieById(int id);
-    boolean AddMovie(MovieCreateRequest movieCreateRequest);
-    boolean EditMovie(MovieEditRequest movieEditRequest);
-    void DeleteMovie(int id);
+    CompletableFuture<List<IMovie>> returnAllMovies();
+    ResponseEntity<IMovie> returnMovieById(int id);
+    String returnPhotoOfMovieByID(int id);
+    ResponseEntity<Trailer> returnTrailerOfMovieById(int id);
+    boolean addMovie(MovieCreateRequest movieCreateRequest);
+    boolean editMovie(MovieEditRequest movieEditRequest);
+    void deleteMovie(int id);
 
 }

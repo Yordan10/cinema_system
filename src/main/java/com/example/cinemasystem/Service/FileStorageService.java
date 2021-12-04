@@ -7,11 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.stream.Stream;
 
 @Service
 public class FileStorageService implements IFileStorageService {
@@ -31,7 +29,7 @@ public class FileStorageService implements IFileStorageService {
 
             Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
            int id= dal.getMovieIdByTitle(title);
-           dal.AddPosterToMovie(file.getOriginalFilename(), id);
+           dal.addPosterToMovie(file.getOriginalFilename(), id);
 
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());

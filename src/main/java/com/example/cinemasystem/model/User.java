@@ -1,9 +1,7 @@
 package com.example.cinemasystem.model;
 
-
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Repository;
 
 public abstract class User {
 
@@ -33,7 +31,7 @@ public abstract class User {
 
     }
 
-    public User(int id,String username, String password,String email, String fName,String lName, String role)
+    protected  User(int id,String username, String password,String email, String fName,String lName, String role)
     {
         this.id=id;
         this.username=username;

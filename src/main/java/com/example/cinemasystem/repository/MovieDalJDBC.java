@@ -17,6 +17,8 @@ import java.util.List;
 @Repository
 public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
+
+
     @Override
     public List<IMovie> getAllMovies()
     {
@@ -224,7 +226,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
     }
     @Override
-    public boolean AddMovie(MovieCreateRequest movieCreateRequest)
+    public boolean addMovie(MovieCreateRequest movieCreateRequest)
     {
         Connection connection = this.getDatabaseConnection();
         String sql = "INSERT INTO individual_project.movie (`title`, `description`, `length`, `genre`, `rating`, `director`) VALUES (?,?,?,?,?,?)";
@@ -264,7 +266,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
     }
 
     @Override
-    public boolean AddTrailerToMovie(int movieId,String trailer)
+    public boolean addTrailerToMovie(int movieId,String trailer)
     {
         Connection connection = this.getDatabaseConnection();
         String sql = "INSERT INTO individual_project.movie_trailers (`movie_id`,`link`) VALUES (?,?)";
@@ -298,7 +300,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
     }
     @Override
-    public boolean AddPosterToMovie(String path,int movieId)
+    public boolean addPosterToMovie(String path,int movieId)
     {
         Connection connection = this.getDatabaseConnection();
         String sql = "INSERT INTO individual_project.movie_photo (`movie_id`,`photo_path`) VALUES (?,?)";
@@ -332,7 +334,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
     }
 
     @Override
-    public void DeleteMovie(int movieId)
+    public void deleteMovie(int movieId)
     {
         Connection connection = this.getDatabaseConnection();
         String sql = "DELETE FROM individual_project.movie WHERE ID = ? ";
@@ -362,7 +364,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
     }
     @Override
-    public void DeletePosterOfMovie(int movieId)
+    public void deletePosterOfMovie(int movieId)
     {
         Connection connection = this.getDatabaseConnection();
         String sql = "DELETE FROM individual_project.movie_photo WHERE movie_id = ? ";
@@ -392,7 +394,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
     }
     @Override
-    public boolean EditPosterOfMovie(MovieEditRequest movieEditRequest)
+    public boolean editPosterOfMovie(MovieEditRequest movieEditRequest)
     {
         boolean bool=false;
         Connection connection = this.getDatabaseConnection();
@@ -433,7 +435,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
     }
 
     @Override
-    public void DeleteTrailerOfMovie(int movieId)
+    public void deleteTrailerOfMovie(int movieId)
     {
         Connection connection = this.getDatabaseConnection();
         String sql = "DELETE FROM individual_project.movie_trailers WHERE movie_id = ? ";

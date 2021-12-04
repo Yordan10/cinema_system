@@ -6,42 +6,55 @@ import com.example.cinemasystem.ServiceInterfaces.IAccount;
 import com.example.cinemasystem.ServiceInterfaces.IUserService;
 import com.example.cinemasystem.model.UserAccount;
 import com.example.cinemasystem.model.request.UserCreateRequest;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 @Service
-@RequiredArgsConstructor
 public class UserService implements IUserService {
 
 
-    private final IAccountDAL dal;
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+      IAccountDAL dal;
+
+     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    @Autowired
+    public UserService(IAccountDAL dal)
+    {
+        this.dal = dal;
+    }
 
 
     @Override
-    public ResponseEntity<List<IAccount>> ReturnAllAccounts()
+    public ResponseEntity<List<IAccount>> returnAllAccounts()
     {
-        if (dal.getAllAccounts() == null)
+        List<IAccount> accounts = dal.getAllAccounts();
+
+        if (accounts == null)
         {
             return ResponseEntity.notFound().build();
         }
         else
         {
-            return ResponseEntity.ok().body(dal.getAllAccounts());
+            return ResponseEntity.ok().body(accounts);
         }
 
+    }
+    @Override
+    @Async("asyncExecutor")
+    public CompletableFuture<List<IAccount>> getAllAccountsAsync() {
+        return CompletableFuture.completedFuture(dal.getAllAccounts());
     }
 
 
 
-    public IAccount GetAccountByUsername(String username)
+    public IAccount getAccountByUsername(String username)
     {
        return dal.getAccountByUsername(username);
     }
@@ -49,7 +62,7 @@ public class UserService implements IUserService {
 
 
     @Override
-    public boolean UserRegistration(UserCreateRequest userCreateRequest) {
+    public boolean userRegistration(UserCreateRequest userCreateRequest) {
 
         IAccount user;
         Optional<IAccount> byUsername = Optional.ofNullable(dal.getAccountByUsername(userCreateRequest.getUsername()));
@@ -65,12 +78,14 @@ public class UserService implements IUserService {
                 userCreateRequest.getRole());
 
         dal.addAccount(user);
-        return true;
+
+
+      return true;
     }
 
 
     @Override
-    public ResponseEntity<IAccount> ReturnAccountByID(int id)
+    public ResponseEntity<IAccount> returnAccountByID(int id)
     {
         IAccount account = dal.getAccountById(id);
         if (account == null)
@@ -83,7 +98,7 @@ public class UserService implements IUserService {
         }
     }
     @Override
-    public ResponseEntity<IAccount> ReturnAccountByUsername(String username)
+    public ResponseEntity<IAccount> returnAccountByUsername(String username)
     {
         IAccount account = dal.getAccountByUsername(username);
         if (account == null)

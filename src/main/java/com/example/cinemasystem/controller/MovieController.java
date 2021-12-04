@@ -3,6 +3,7 @@ package com.example.cinemasystem.controller;
 import com.example.cinemasystem.Service.FileStorageService;
 import com.example.cinemasystem.ServiceInterfaces.IMovie;
 import com.example.cinemasystem.ServiceInterfaces.IMovieService;
+import com.example.cinemasystem.model.Movie;
 import com.example.cinemasystem.model.Trailer;
 import com.example.cinemasystem.model.request.MovieCreateRequest;
 import com.example.cinemasystem.model.request.MovieEditRequest;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 
 @RestController
@@ -31,22 +33,30 @@ public class MovieController {
     FileStorageService storageService;
 
     @GetMapping
-    public ResponseEntity<List<IMovie>> GetAllMovies()
+    public CompletableFuture<ResponseEntity> getAllMovies()
     {
-        return movieService.ReturnAllMovies();
+        CompletableFuture<List<IMovie>> movies = movieService.returnAllMovies();
+
+        if (movies!= null)
+        {
+            return movies.thenApply(ResponseEntity::ok);
+        }
+        else {
+            return (CompletableFuture) ResponseEntity.notFound();
+        }
     }
 
 
 
     @GetMapping("{id}")
-    public ResponseEntity<IMovie> GetMovieById(@PathVariable(value = "id") int id)
+    public ResponseEntity<IMovie> getMovieById(@PathVariable(value = "id") int id)
     {
-        return movieService.ReturnMovieById(id);
+        return movieService.returnMovieById(id);
     }
 
 
     @PostMapping("/upload/photo/{title}")
-    public ResponseEntity UploadPhoto(@RequestParam(value = "file") MultipartFile file,@PathVariable(value = "title") String title)
+    public ResponseEntity uploadPhoto(@RequestParam(value = "file") MultipartFile file,@PathVariable(value = "title") String title)
     {
         try{
             storageService.save(file,title);
@@ -63,9 +73,9 @@ public class MovieController {
 
 
     @GetMapping("/photo/{id}")
-    public ResponseEntity<Resource> GetMoviePhotoById(@PathVariable(value = "id") int id)
+    public ResponseEntity<Resource> getMoviePhotoById(@PathVariable(value = "id") int id)
     {
-        String filename =  movieService.ReturnPhotoOfMovieByID(id);
+        String filename =  movieService.returnPhotoOfMovieByID(id);
         ByteArrayResource inputStream = null;
         try{
             String directory = new File("./" ).getCanonicalPath() + "/photos/" + filename;
@@ -77,35 +87,35 @@ public class MovieController {
                     .body(inputStream);
 
         }
-        catch (Exception e){}
+        catch (Exception e){e.getMessage();}
 
         return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/trailer/{id}")
-    public ResponseEntity<Trailer> GetTrailerCharityById(@PathVariable(value = "id") int id)
+    public ResponseEntity<Trailer> getTrailerCharityById(@PathVariable(value = "id") int id)
     {
-        return movieService.ReturnTrailerOfMovieById(id);
+        return movieService.returnTrailerOfMovieById(id);
     }
 
     @PostMapping("addMovie")
-    public ResponseEntity AddMovie (@RequestBody MovieCreateRequest movieCreateRequest)
+    public ResponseEntity addMovie (@RequestBody MovieCreateRequest movieCreateRequest)
     {
-        movieService.AddMovie(movieCreateRequest);
+        movieService.addMovie(movieCreateRequest);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("editMovie")
-    public ResponseEntity EditMovie(@RequestBody MovieEditRequest movieEditRequest)
+    public ResponseEntity editMovie(@RequestBody MovieEditRequest movieEditRequest)
     {
-        movieService.EditMovie(movieEditRequest);
+        movieService.editMovie(movieEditRequest);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/delete/{id}")
-    public ResponseEntity DeleteMovie (@PathVariable(value = "id") int id)
+    public ResponseEntity deleteMovie (@PathVariable(value = "id") int id)
     {
-        movieService.DeleteMovie(id);
+        movieService.deleteMovie(id);
         return ResponseEntity.ok().build();
     }
 }

@@ -43,7 +43,7 @@ public class MovieServiceUnitTests {
                 .thenReturn(movie);
 
         //assert
-        Assertions.assertEquals(new ResponseEntity(movie, HttpStatus.OK),movieService.ReturnMovieById(id));
+        Assertions.assertEquals(new ResponseEntity(movie, HttpStatus.OK),movieService.returnMovieById(id));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class MovieServiceUnitTests {
         when(movieDalJDBC.getMovieById(id))
                 .thenReturn(null);
 
-        Assertions.assertEquals(new ResponseEntity(HttpStatus.NOT_FOUND),movieService.ReturnMovieById(id));
+        Assertions.assertEquals(new ResponseEntity(HttpStatus.NOT_FOUND),movieService.returnMovieById(id));
     }
     @Test
     void getAllMoviesTest(){
@@ -64,7 +64,7 @@ public class MovieServiceUnitTests {
         when(movieDalJDBC.getAllMovies()).thenReturn(Stream.of(movie)
                 .collect(Collectors.toList()));
 
-        Assertions.assertEquals(new ResponseEntity(movies,HttpStatus.OK),movieService.ReturnAllMovies());
+        Assertions.assertEquals(new ResponseEntity(movies,HttpStatus.OK),movieService.returnAllMovies());
     }
 
     @Test
@@ -73,7 +73,7 @@ public class MovieServiceUnitTests {
 
         when(movieDalJDBC.getAllMovies()).thenReturn(null);
 
-        Assertions.assertEquals(new ResponseEntity(HttpStatus.NOT_FOUND),movieService.ReturnAllMovies());
+        Assertions.assertEquals(new ResponseEntity(HttpStatus.NOT_FOUND),movieService.returnAllMovies());
     }
     @Test
     void getPosterOfMovieByIdTest(){
@@ -82,7 +82,7 @@ public class MovieServiceUnitTests {
         when(movieDalJDBC.getPhotoByMovieId(id))
                 .thenReturn(path);
 
-        Assertions.assertEquals(path,movieService.ReturnPhotoOfMovieByID(id));
+        Assertions.assertEquals(path,movieService.returnPhotoOfMovieByID(id));
     }
 
     @Test
@@ -92,7 +92,7 @@ public class MovieServiceUnitTests {
         when(movieDalJDBC.getPhotoByMovieId(id))
                 .thenReturn(path);
 
-        Assertions.assertEquals(path,movieService.ReturnPhotoOfMovieByID(id));
+        Assertions.assertEquals(path,movieService.returnPhotoOfMovieByID(id));
     }
 
     @Test
@@ -102,7 +102,7 @@ public class MovieServiceUnitTests {
         when(movieDalJDBC.getTrailerByMovieId(id))
                 .thenReturn(trailer);
 
-        Assertions.assertEquals(new ResponseEntity(trailer,HttpStatus.OK),movieService.ReturnTrailerOfMovieById(id));
+        Assertions.assertEquals(new ResponseEntity(trailer,HttpStatus.OK),movieService.returnTrailerOfMovieById(id));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class MovieServiceUnitTests {
         when(movieDalJDBC.getTrailerByMovieId(id))
                 .thenReturn(null);
 
-        Assertions.assertEquals(new ResponseEntity(HttpStatus.NOT_FOUND),movieService.ReturnTrailerOfMovieById(id));
+        Assertions.assertEquals(new ResponseEntity(HttpStatus.NOT_FOUND),movieService.returnTrailerOfMovieById(id));
     }
 
     @Test
@@ -120,11 +120,11 @@ public class MovieServiceUnitTests {
         MovieCreateRequest movieCreateRequest = new MovieCreateRequest();
         int id =10;
 
-        when(movieDalJDBC.AddMovie(movieCreateRequest)).thenReturn(true);
+        when(movieDalJDBC.addMovie(movieCreateRequest)).thenReturn(true);
         when(movieDalJDBC.getMovieIdByTitle(movieCreateRequest.getTitle())).thenReturn(id);
-        when(movieDalJDBC.AddTrailerToMovie(id,movieCreateRequest.getTrailer())).thenReturn(true);
+        when(movieDalJDBC.addTrailerToMovie(id,movieCreateRequest.getTrailer())).thenReturn(true);
 
-        Assertions.assertEquals(true,movieService.AddMovie(movieCreateRequest));
+        Assertions.assertEquals(true,movieService.addMovie(movieCreateRequest));
 
 
     }

@@ -19,7 +19,7 @@ public class AuthenticationUserDetailService implements UserDetailsService {
     private final UserService userService;
 
     @Override public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        IAccount user = userService.GetAccountByUsername(username);
+        IAccount user = userService.getAccountByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
