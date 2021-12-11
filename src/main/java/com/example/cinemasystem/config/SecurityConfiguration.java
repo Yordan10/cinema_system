@@ -32,8 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/movies/**/**").permitAll()//hasAnyAuthority("USER")
                 .antMatchers("/movies/**").permitAll()//hasAnyAuthority("USER")
                 .antMatchers("/movies").permitAll()//hasAnyAuthority("USER")// HAS TO CHANGE ------------------
-
-
+                .antMatchers("/reservation").permitAll()
                 .antMatchers(HttpMethod.DELETE,"/movies/delete").permitAll()
                 //ROLE BASED AUTHENTICATION END
                 .anyRequest().authenticated()

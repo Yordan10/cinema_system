@@ -9,7 +9,6 @@ import java.util.concurrent.Executor;
 
 @Configuration
 @EnableAsync(proxyTargetClass=true)
-
 public class AsyncConfiguration {
     @Bean(name = "asyncExecutor")
     public Executor asyncExecutor() {

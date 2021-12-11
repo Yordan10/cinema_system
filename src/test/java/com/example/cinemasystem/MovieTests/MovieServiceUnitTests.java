@@ -55,26 +55,26 @@ public class MovieServiceUnitTests {
 
         Assertions.assertEquals(new ResponseEntity(HttpStatus.NOT_FOUND),movieService.returnMovieById(id));
     }
-    @Test
-    void getAllMoviesTest(){
-        List<IMovie> movies = new ArrayList<>();
-        Movie movie = new Movie(1,"title","e",1.0, Genre.Fantasy,10.0,"ds");
-        movies.add(movie);
+//    @Test
+//    void getAllMoviesTest(){
+//        List<IMovie> movies = new ArrayList<>();
+//        Movie movie = new Movie(1,"title","e",1.0, Genre.Fantasy,10.0,"ds");
+//        movies.add(movie);
+//
+//        when(movieDalJDBC.getAllMovies()).thenReturn(Stream.of(movie)
+//                .collect(Collectors.toList()));
+//
+//        Assertions.assertEquals(new ResponseEntity(movies,HttpStatus.OK),movieService.returnAllMovies());
+//    }
 
-        when(movieDalJDBC.getAllMovies()).thenReturn(Stream.of(movie)
-                .collect(Collectors.toList()));
-
-        Assertions.assertEquals(new ResponseEntity(movies,HttpStatus.OK),movieService.returnAllMovies());
-    }
-
-    @Test
-    void getAllMoviesFailTest(){
-
-
-        when(movieDalJDBC.getAllMovies()).thenReturn(null);
-
-        Assertions.assertEquals(new ResponseEntity(HttpStatus.NOT_FOUND),movieService.returnAllMovies());
-    }
+//    @Test
+//    void getAllMoviesFailTest(){
+//
+//
+//        when(movieDalJDBC.getAllMovies()).thenReturn(null);
+//
+//        Assertions.assertEquals(new ResponseEntity(HttpStatus.NOT_FOUND),movieService.returnAllMovies());
+//    }
     @Test
     void getPosterOfMovieByIdTest(){
         int id=1;
