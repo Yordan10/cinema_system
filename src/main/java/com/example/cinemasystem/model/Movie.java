@@ -7,25 +7,25 @@ import lombok.Setter;
 
 import java.util.Objects;
 
-
+@Getter @Setter
 public class Movie implements IMovie {
 
-    @Getter @Setter
+
     private  int id;
-    @Getter @Setter
+
     private String title;
-    @Getter @Setter
+
     private String description;
-    @Getter @Setter
-    private Double length;
-    @Getter @Setter
+
+    private int length;
+
     private Genre genre;
-    @Getter @Setter
+
     private Double rating;
-    @Getter @Setter
+
     private String director;
 
-    public Movie(int id,String title,String description,Double length,Genre genre, Double rating,String director)
+    public Movie(int id,String title,String description,int length,Genre genre, Double rating,String director)
     {
         this.id=id;
         this.title=title;

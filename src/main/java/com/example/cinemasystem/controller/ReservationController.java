@@ -21,7 +21,8 @@ public class ReservationController {
     private IUserService userService;
 
     @GetMapping
-    public CompletableFuture<ResponseEntity> getAllReservations(){
+    public CompletableFuture<ResponseEntity> getAllReservations()
+    {
         return reservationService.getAllReservations();
     }
 

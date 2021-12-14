@@ -35,7 +35,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
                 int id = resultSet.getInt("ID");
                 String title = resultSet.getString("title");
                 String description = resultSet.getString("description");
-                Double length = resultSet.getDouble("length");
+                int length = resultSet.getInt("length");
                 String genre = resultSet.getString("genre");
                 Double rating = resultSet.getDouble("rating");
                 String director = resultSet.getString("director");
@@ -82,7 +82,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
             int movieId = resultSet.getInt("ID");
             String title = resultSet.getString("title");
             String description = resultSet.getString("description");
-            Double length = resultSet.getDouble("length");
+            int length = resultSet.getInt("length");
             String genre = resultSet.getString("genre");
             Double rating = resultSet.getDouble("rating");
             String director = resultSet.getString("director");
