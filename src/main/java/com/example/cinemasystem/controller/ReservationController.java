@@ -26,6 +26,15 @@ public class ReservationController {
         return reservationService.getAllReservations();
     }
 
+    @GetMapping("/byAccount")
+    public CompletableFuture<ResponseEntity> getAllReservationsByAccount()
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        int accountID = userService.getAccountByUsername(currentPrincipalName).getId();
+        return reservationService.getAllReservationsByAccount(accountID);
+    }
+
     @PostMapping("reserve")
     public ResponseEntity makeReservation(@RequestBody ReservationRequest request){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -35,6 +44,20 @@ public class ReservationController {
         reservationService.makeReservation(accountID,request);
 
         return ResponseEntity.ok().build();
+    }
+    @GetMapping("/byAccount/highest-price")
+    public CompletableFuture<ResponseEntity> getAllReservationsByAccountOrderedByPrice()
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        int accountID = userService.getAccountByUsername(currentPrincipalName).getId();
+        return reservationService.getAllReservationsByAccountOrderedByPrice(accountID);
+    }
+    @GetMapping("/highest-price")
+    public CompletableFuture<ResponseEntity> getAllReservationsOrderedByPrice()
+    {
+
+        return reservationService.getAllReservationsOrderedByPrice();
     }
 
 }

@@ -14,6 +14,8 @@ public class Reservation implements IReservation {
     private int movieId;
     private int accountId;
 
+    private String movieName;
+
     private Date transactionDate;
 
     private Double price;
@@ -24,10 +26,11 @@ public class Reservation implements IReservation {
 
     private String projectionHour;
 
-    public Reservation(int id,int movieId,int accountId,Date transactionDate, Double price,int numberOfTickets,String projectionDay,String projectionHour)
+    public Reservation(int id,int movieId,String movieName,int accountId,Date transactionDate, Double price,int numberOfTickets,String projectionDay,String projectionHour)
     {
         this.id=id;
         this.movieId=movieId;
+        this.movieName=movieName;
         this.accountId=accountId;
         this.transactionDate=transactionDate;
         this.numberOfTickets=numberOfTickets;

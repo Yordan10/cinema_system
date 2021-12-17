@@ -17,7 +17,7 @@ public class ReservationDalJDBC extends JDBCRepository implements IReservationDA
     public List<IReservation> getAllReservations(){
         List<IReservation> reservations = new ArrayList<>();
         Connection connection = this.getDatabaseConnection();
-        String sql = "SELECT * from individual_project.reservations";
+        String sql = "SELECT a.ID, a.movie_id,a.date,a.number_of_tickets,a.price,a.projection_day,a.projection_hour,b.title from individual_project.reservations a,  individual_project.movie b  where a.movie_id = b.ID  ORDER BY a.ID desc";
 
         try {
 
@@ -34,9 +34,9 @@ public class ReservationDalJDBC extends JDBCRepository implements IReservationDA
                 Double price = resultSet.getDouble("price");
                 String projectionDay = resultSet.getString("projection_day");
                 String projectionHour = resultSet.getString("projection_hour");
+                String movieName = resultSet.getString("title");
 
-
-                IReservation reservation = new Reservation(id,movieId,accountId,transactionDate,price,numberOfTickets,projectionDay,projectionHour);
+                IReservation reservation = new Reservation(id,movieId,movieName,accountId,transactionDate,price,numberOfTickets,projectionDay,projectionHour);
                 reservations.add(reservation);
             }
 
@@ -84,5 +84,128 @@ public class ReservationDalJDBC extends JDBCRepository implements IReservationDA
         }
     }
 
+    @Override
+    public List<IReservation> getAllReservationsByAccount(int accountId){
+        List<IReservation> reservations = new ArrayList<>();
+        Connection connection = this.getDatabaseConnection();
+        String sql = "SELECT a.ID, a.movie_id,a.date,a.number_of_tickets,a.price,a.projection_day,a.projection_hour,b.title from individual_project.reservations a,  individual_project.movie b  where a.movie_id = b.ID and account_id = ? ORDER BY a.ID desc";
+        PreparedStatement statement = null;
+        try {
 
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1,accountId);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("ID");
+                int movieId = resultSet.getInt("movie_id");
+                Date transactionDate = resultSet.getDate("date");
+                int numberOfTickets = resultSet.getInt("number_of_tickets");
+                Double price = resultSet.getDouble("price");
+                String projectionDay = resultSet.getString("projection_day");
+                String projectionHour = resultSet.getString("projection_hour");
+                String movieName= resultSet.getString("title");
+
+
+                IReservation reservation = new Reservation(id,movieId,movieName,accountId,transactionDate,price,numberOfTickets,projectionDay,projectionHour);
+                reservations.add(reservation);
+            }
+
+
+        } catch (SQLException throwable) {System.out.println("Can't get all reservations");}
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
+        }
+        return reservations;
+    }
+
+    @Override
+    public List<IReservation> getAllReservationsByAccountOrderedByPrice(int accountId){
+        List<IReservation> reservations = new ArrayList<>();
+        Connection connection = this.getDatabaseConnection();
+        String sql = "SELECT a.ID, a.movie_id,a.date,a.number_of_tickets,a.price,a.projection_day,a.projection_hour,b.title from individual_project.reservations a,  individual_project.movie b  where a.movie_id = b.ID and account_id = ? ORDER BY a.price desc";
+        PreparedStatement statement = null;
+        try {
+
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1,accountId);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("ID");
+                int movieId = resultSet.getInt("movie_id");
+                Date transactionDate = resultSet.getDate("date");
+                int numberOfTickets = resultSet.getInt("number_of_tickets");
+                Double price = resultSet.getDouble("price");
+                String projectionDay = resultSet.getString("projection_day");
+                String projectionHour = resultSet.getString("projection_hour");
+                String movieName= resultSet.getString("title");
+
+
+                IReservation reservation = new Reservation(id,movieId,movieName,accountId,transactionDate,price,numberOfTickets,projectionDay,projectionHour);
+                reservations.add(reservation);
+            }
+
+
+        } catch (SQLException throwable) {System.out.println("Can't get all reservations");}
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
+        }
+        return reservations;
+    }
+    @Override
+    public List<IReservation> getAllReservationsOrderedByPrice(){
+        List<IReservation> reservations = new ArrayList<>();
+        Connection connection = this.getDatabaseConnection();
+        String sql = "SELECT a.ID, a.movie_id,a.date,a.number_of_tickets,a.price,a.projection_day,a.projection_hour,b.title from individual_project.reservations a,  individual_project.movie b  where a.movie_id = b.ID  ORDER BY a.price desc";
+        PreparedStatement statement = null;
+        try {
+
+            statement = connection.prepareStatement(sql);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("ID");
+                int accountId = resultSet.getInt("account_id");
+                int movieId = resultSet.getInt("movie_id");
+                Date transactionDate = resultSet.getDate("date");
+                int numberOfTickets = resultSet.getInt("number_of_tickets");
+                Double price = resultSet.getDouble("price");
+                String projectionDay = resultSet.getString("projection_day");
+                String projectionHour = resultSet.getString("projection_hour");
+                String movieName = resultSet.getString("title");
+
+
+                IReservation reservation = new Reservation(id,movieId,movieName,accountId,transactionDate,price,numberOfTickets,projectionDay,projectionHour);
+                reservations.add(reservation);
+            }
+
+
+        } catch (SQLException throwable) {System.out.println("Can't get all reservations");}
+        finally {
+            try{
+                connection.commit();
+                connection.close();
+            }
+            catch (SQLException throwable){
+                System.out.println("Can't close connection");
+            }
+        }
+        return reservations;
+    }
 }

@@ -40,5 +40,50 @@ public class ReservationService implements IReservationService {
       dal.makeReservation(accountId,request);
   }
 
+    @Override
+    @Async("asyncExecutor")
+    public CompletableFuture<ResponseEntity> getAllReservationsByAccount(int accountId){
 
+        CompletableFuture<List<IReservation>> reservations = CompletableFuture.completedFuture(dal.getAllReservationsByAccount(accountId));
+
+        if(reservations!= null)
+        {
+            return reservations.thenApply(ResponseEntity::ok);
+        }
+        else
+        {
+            return (CompletableFuture) ResponseEntity.notFound();
+        }
+    }
+    @Override
+    @Async("asyncExecutor")
+    public CompletableFuture<ResponseEntity> getAllReservationsByAccountOrderedByPrice(int accountId){
+
+        CompletableFuture<List<IReservation>> reservations = CompletableFuture.completedFuture(dal.getAllReservationsByAccountOrderedByPrice(accountId));
+
+        if(reservations!= null)
+        {
+            return reservations.thenApply(ResponseEntity::ok);
+        }
+        else
+        {
+            return (CompletableFuture) ResponseEntity.notFound();
+        }
+    }
+
+    @Override
+    @Async("asyncExecutor")
+    public CompletableFuture<ResponseEntity> getAllReservationsOrderedByPrice(){
+
+        CompletableFuture<List<IReservation>> reservations = CompletableFuture.completedFuture(dal.getAllReservationsOrderedByPrice());
+
+        if(reservations!= null)
+        {
+            return reservations.thenApply(ResponseEntity::ok);
+        }
+        else
+        {
+            return (CompletableFuture) ResponseEntity.notFound();
+        }
+    }
 }
