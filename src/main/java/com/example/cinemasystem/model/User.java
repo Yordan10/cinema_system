@@ -2,29 +2,23 @@ package com.example.cinemasystem.model;
 
 import lombok.Getter;
 import lombok.Setter;
-
+@Getter @Setter
 public abstract class User {
 
 
-    @Getter @Setter
+
     protected int id;
 
-    @Getter @Setter
     protected   String username;
 
-    @Getter @Setter
     protected   String password;
 
-    @Getter @Setter
     protected   String email;
 
-    @Getter @Setter
     protected   String firstName;
 
-    @Getter @Setter
     protected   String lastName;
 
-    @Getter @Setter
     protected   String role;
 
     public  User() {
