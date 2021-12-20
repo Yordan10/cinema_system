@@ -1,11 +1,9 @@
 package com.example.cinemasystem.model;
 
-import com.example.cinemasystem.Enums.Genre;
-import com.example.cinemasystem.ServiceInterfaces.IMovie;
+import com.example.cinemasystem.enums.Genre;
+import com.example.cinemasystem.serviceInterfaces.IMovie;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Objects;
 
 @Getter @Setter
 public class Movie implements IMovie {
@@ -40,29 +38,4 @@ public class Movie implements IMovie {
 
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Movie movie = (Movie) o;
-        return Objects.equals(id, movie.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-
-
-    @Override
-    public String toString() {
-        return "Movie: " + title +
-                ", length: " + length +
-                " has rating: " + rating +
-                ", directed by " +
-                director;
-
-    }
 }

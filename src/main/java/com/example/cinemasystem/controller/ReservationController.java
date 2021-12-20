@@ -1,7 +1,7 @@
 package com.example.cinemasystem.controller;
 
-import com.example.cinemasystem.ServiceInterfaces.IReservationService;
-import com.example.cinemasystem.ServiceInterfaces.IUserService;
+import com.example.cinemasystem.serviceInterfaces.IReservationService;
+import com.example.cinemasystem.serviceInterfaces.IUserService;
 import com.example.cinemasystem.model.request.ReservationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +52,22 @@ public class ReservationController {
         String currentPrincipalName = authentication.getName();
         int accountID = userService.getAccountByUsername(currentPrincipalName).getId();
         return reservationService.getAllReservationsByAccountOrderedByPrice(accountID);
+    }
+
+    @GetMapping("/byAccount/{month}")
+    public CompletableFuture<ResponseEntity> getAllReservationsByAccountForCurrentMonth(@PathVariable(value = "month") int month)
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        int accountID = userService.getAccountByUsername(currentPrincipalName).getId();
+        return reservationService.getAllReservationsByAccountForCurrentMonth(month,accountID);
+    }
+
+    @GetMapping("/{month}")
+    public CompletableFuture<ResponseEntity> getAllReservationsForCurrentMonth(@PathVariable(value = "month") int month)
+    {
+
+        return reservationService.getAllReservationsForCurrentMonth(month);
     }
     @GetMapping("/highest-price")
     public CompletableFuture<ResponseEntity> getAllReservationsOrderedByPrice()

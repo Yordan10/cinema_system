@@ -1,4 +1,4 @@
-package com.example.cinemasystem.ServiceInterfaces;
+package com.example.cinemasystem.serviceInterfaces;
 
 import com.example.cinemasystem.model.request.UserCreateRequest;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +13,6 @@ public interface IUserService {
     ResponseEntity<List<IAccount>> returnAllAccounts();
     boolean userRegistration(UserCreateRequest userCreateRequest);
     ResponseEntity<IAccount> returnAccountByUsername(String username);
-    CompletableFuture<List<IAccount>> getAllAccountsAsync();
+    CompletableFuture<ResponseEntity> getAllAccountsAsync();
     IAccount getAccountByUsername(String username);
 }

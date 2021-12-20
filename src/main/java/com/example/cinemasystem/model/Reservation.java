@@ -1,6 +1,6 @@
 package com.example.cinemasystem.model;
 
-import com.example.cinemasystem.ServiceInterfaces.IReservation;
+import com.example.cinemasystem.serviceInterfaces.IReservation;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +11,9 @@ import java.util.Date;
 public class Reservation implements IReservation {
 
     private int id;
+
     private int movieId;
+
     private int accountId;
 
     private String movieName;
@@ -26,6 +28,8 @@ public class Reservation implements IReservation {
 
     private String projectionHour;
 
+    private String accountName;
+
     public Reservation(int id,int movieId,String movieName,int accountId,Date transactionDate, Double price,int numberOfTickets,String projectionDay,String projectionHour)
     {
         this.id=id;
@@ -37,6 +41,20 @@ public class Reservation implements IReservation {
         this.price=price;
         this.projectionDay=projectionDay;
         this.projectionHour=projectionHour;
+
+    }
+    public Reservation(int id,int movieId,String movieName,int accountId,Date transactionDate, Double price,int numberOfTickets,String projectionDay,String projectionHour,String accountName)
+    {
+        this.id=id;
+        this.movieId=movieId;
+        this.movieName=movieName;
+        this.accountId=accountId;
+        this.transactionDate=transactionDate;
+        this.numberOfTickets=numberOfTickets;
+        this.price=price;
+        this.projectionDay=projectionDay;
+        this.projectionHour=projectionHour;
+        this.accountName=accountName;
 
     }
     public Reservation(){}

@@ -1,9 +1,8 @@
 package com.example.cinemasystem.repository;
 
-import com.example.cinemasystem.DALInterfaces.IMovieDAL;
-import com.example.cinemasystem.Enums.Genre;
-import com.example.cinemasystem.ServiceInterfaces.IAccount;
-import com.example.cinemasystem.ServiceInterfaces.IMovie;
+import com.example.cinemasystem.dalInterfaces.IMovieDAL;
+import com.example.cinemasystem.enums.Genre;
+import com.example.cinemasystem.serviceInterfaces.IMovie;
 import com.example.cinemasystem.model.Movie;
 import com.example.cinemasystem.model.Trailer;
 import com.example.cinemasystem.model.request.MovieCreateRequest;
@@ -394,7 +393,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
     }
     @Override
-    public boolean editPosterOfMovie(MovieEditRequest movieEditRequest)
+    public boolean editMovie(MovieEditRequest movieEditRequest)
     {
         boolean bool=false;
         Connection connection = this.getDatabaseConnection();

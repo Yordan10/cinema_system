@@ -1,7 +1,7 @@
-package com.example.cinemasystem.Service;
+package com.example.cinemasystem.service;
 
-import com.example.cinemasystem.DALInterfaces.IMovieDAL;
-import com.example.cinemasystem.ServiceInterfaces.IFileStorageService;
+import com.example.cinemasystem.dalInterfaces.IMovieDAL;
+import com.example.cinemasystem.serviceInterfaces.IFileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,7 +1,7 @@
 package com.example.cinemasystem.repository;
 
-import com.example.cinemasystem.DALInterfaces.IAccountDAL;
-import com.example.cinemasystem.ServiceInterfaces.IAccount;
+import com.example.cinemasystem.dalInterfaces.IAccountDAL;
+import com.example.cinemasystem.serviceInterfaces.IAccount;
 import com.example.cinemasystem.model.UserAccount;
 import org.springframework.stereotype.Repository;
 

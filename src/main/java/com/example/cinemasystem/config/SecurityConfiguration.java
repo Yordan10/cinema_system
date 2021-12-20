@@ -1,6 +1,6 @@
 package com.example.cinemasystem.config;
 
-import com.example.cinemasystem.Service.AuthenticationUserDetailService;
+import com.example.cinemasystem.service.AuthenticationUserDetailService;
 import com.example.cinemasystem.filter.JWTAuthenticationFilter;
 import com.example.cinemasystem.filter.JWTAuthorizationFilter;
 import lombok.RequiredArgsConstructor;

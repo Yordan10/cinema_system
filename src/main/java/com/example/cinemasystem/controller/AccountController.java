@@ -1,7 +1,7 @@
 package com.example.cinemasystem.controller;
 
-import com.example.cinemasystem.ServiceInterfaces.IAccount;
-import com.example.cinemasystem.ServiceInterfaces.IUserService;
+import com.example.cinemasystem.serviceInterfaces.IAccount;
+import com.example.cinemasystem.serviceInterfaces.IUserService;
 
 import com.example.cinemasystem.model.request.UserCreateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -25,15 +23,7 @@ public class AccountController {
     @GetMapping
     public CompletableFuture<ResponseEntity> getAllAccounts()
     {
-        CompletableFuture<List<IAccount>> accounts= userService.getAllAccountsAsync();
-
-        if(accounts != null) {
-
-            return accounts.thenApply(ResponseEntity::ok);
-        } else {
-
-            return (CompletableFuture) ResponseEntity.notFound();
-        }
+        return userService.getAllAccountsAsync();
     }
 
     @GetMapping("/{id}")

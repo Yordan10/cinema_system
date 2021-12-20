@@ -1,7 +1,7 @@
-package com.example.cinemasystem.Service;
+package com.example.cinemasystem.service;
 
 
-import com.example.cinemasystem.ServiceInterfaces.IAccount;
+import com.example.cinemasystem.serviceInterfaces.IAccount;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

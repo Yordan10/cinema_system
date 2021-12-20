@@ -8,7 +8,7 @@ import java.sql.Date;
 
 @Data
 @Getter
-@Setter
+
 public class ReservationRequest {
 
     private int id;

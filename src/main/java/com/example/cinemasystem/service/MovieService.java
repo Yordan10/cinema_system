@@ -1,9 +1,9 @@
-package com.example.cinemasystem.Service;
+package com.example.cinemasystem.service;
 
-import com.example.cinemasystem.DALInterfaces.IMovieDAL;
-import com.example.cinemasystem.ServiceInterfaces.IFileStorageService;
-import com.example.cinemasystem.ServiceInterfaces.IMovie;
-import com.example.cinemasystem.ServiceInterfaces.IMovieService;
+import com.example.cinemasystem.dalInterfaces.IMovieDAL;
+import com.example.cinemasystem.serviceInterfaces.IFileStorageService;
+import com.example.cinemasystem.serviceInterfaces.IMovie;
+import com.example.cinemasystem.serviceInterfaces.IMovieService;
 
 import com.example.cinemasystem.model.Trailer;
 import com.example.cinemasystem.model.request.MovieCreateRequest;
@@ -31,9 +31,18 @@ public class MovieService implements IMovieService {
 
 
     @Override
-    public CompletableFuture<List<IMovie>> returnAllMovies()
+    public CompletableFuture<ResponseEntity> returnAllMovies()
     {
-        return CompletableFuture.completedFuture(dal.getAllMovies());
+        CompletableFuture<List<IMovie>> movies = CompletableFuture.completedFuture(dal.getAllMovies());
+
+        if(movies != null) {
+
+            return movies.thenApply(ResponseEntity::ok);
+        } else {
+
+            return (CompletableFuture) ResponseEntity.notFound();
+        }
+
 
     }
     @Override
@@ -98,20 +107,20 @@ public class MovieService implements IMovieService {
     public boolean editMovie(MovieEditRequest movieEditRequest)
     {
         boolean bool = false;
-       if(dal.editPosterOfMovie(movieEditRequest)){
+       if(dal.editMovie(movieEditRequest)){
         bool = true;
        }
 
         return bool;
     }
     @Override
-    public void deleteMovie(int id){
+    public boolean deleteMovie(int id){
         String photoPath =  dal.getPhotoByMovieId(id);
         dal.deleteMovie(id);
         dal.deletePosterOfMovie(id);
         dal.deleteTrailerOfMovie(id);
         fileStorageService.delete(photoPath);
 
-
+        return true;
     }
 }

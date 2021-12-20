@@ -1,8 +1,8 @@
-package com.example.cinemasystem.Service;
+package com.example.cinemasystem.service;
 
-import com.example.cinemasystem.DALInterfaces.IReservationDAL;
-import com.example.cinemasystem.ServiceInterfaces.IReservation;
-import com.example.cinemasystem.ServiceInterfaces.IReservationService;
+import com.example.cinemasystem.dalInterfaces.IReservationDAL;
+import com.example.cinemasystem.serviceInterfaces.IReservation;
+import com.example.cinemasystem.serviceInterfaces.IReservationService;
 import com.example.cinemasystem.model.request.ReservationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +35,15 @@ public class ReservationService implements IReservationService {
   }
 
   @Override
-    public void makeReservation(int accountId, ReservationRequest request)
+    public boolean makeReservation(int accountId, ReservationRequest request)
   {
-      dal.makeReservation(accountId,request);
+      boolean bool = false;
+      if(dal.makeReservation(accountId,request))
+      {
+          bool = true;
+      }
+
+  return bool;
   }
 
     @Override
@@ -45,6 +51,37 @@ public class ReservationService implements IReservationService {
     public CompletableFuture<ResponseEntity> getAllReservationsByAccount(int accountId){
 
         CompletableFuture<List<IReservation>> reservations = CompletableFuture.completedFuture(dal.getAllReservationsByAccount(accountId));
+
+        if(reservations!= null)
+        {
+            return reservations.thenApply(ResponseEntity::ok);
+        }
+        else
+        {
+            return (CompletableFuture) ResponseEntity.notFound();
+        }
+    }
+    @Override
+    @Async("asyncExecutor")
+    public CompletableFuture<ResponseEntity> getAllReservationsByAccountForCurrentMonth(int month,int accountId){
+
+        CompletableFuture<List<IReservation>> reservations = CompletableFuture.completedFuture(dal.getAllReservationsByAccountForCurrentMonth(month,accountId));
+
+        if(reservations!= null)
+        {
+            return reservations.thenApply(ResponseEntity::ok);
+        }
+        else
+        {
+            return (CompletableFuture) ResponseEntity.notFound();
+        }
+    }
+
+    @Override
+    @Async("asyncExecutor")
+    public CompletableFuture<ResponseEntity> getAllReservationsForCurrentMonth(int month){
+
+        CompletableFuture<List<IReservation>> reservations = CompletableFuture.completedFuture(dal.getAllReservationsForCurrentMonth(month));
 
         if(reservations!= null)
         {

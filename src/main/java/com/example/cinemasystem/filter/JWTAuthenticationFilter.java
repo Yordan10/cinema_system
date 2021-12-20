@@ -2,7 +2,7 @@ package com.example.cinemasystem.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.example.cinemasystem.ServiceInterfaces.IAccount;
+import com.example.cinemasystem.serviceInterfaces.IAccount;
 import com.example.cinemasystem.config.AuthenticationConfigConstants;
 import com.example.cinemasystem.model.UserAccount;
 import com.fasterxml.jackson.databind.ObjectMapper;

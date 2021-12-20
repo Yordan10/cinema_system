@@ -1,9 +1,6 @@
-package com.example.cinemasystem.ServiceInterfaces;
+package com.example.cinemasystem.serviceInterfaces;
 
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.nio.file.Path;
 
 
 public interface IFileStorageService {

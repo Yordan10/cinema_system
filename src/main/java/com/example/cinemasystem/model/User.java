@@ -2,7 +2,8 @@ package com.example.cinemasystem.model;
 
 import lombok.Getter;
 import lombok.Setter;
-@Getter @Setter
+@Getter
+@Setter
 public abstract class User {
 
 

@@ -1,6 +1,6 @@
-package com.example.cinemasystem.DALInterfaces;
+package com.example.cinemasystem.dalInterfaces;
 
-import com.example.cinemasystem.ServiceInterfaces.IAccount;
+import com.example.cinemasystem.serviceInterfaces.IAccount;
 
 import java.util.List;
 

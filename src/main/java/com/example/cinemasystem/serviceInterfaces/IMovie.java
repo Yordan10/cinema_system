@@ -1,4 +1,4 @@
-package com.example.cinemasystem.ServiceInterfaces;
+package com.example.cinemasystem.serviceInterfaces;
 
 public interface IMovie {
     public int getId();

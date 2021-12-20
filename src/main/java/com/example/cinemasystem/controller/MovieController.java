@@ -1,9 +1,8 @@
 package com.example.cinemasystem.controller;
 
-import com.example.cinemasystem.Service.FileStorageService;
-import com.example.cinemasystem.ServiceInterfaces.IMovie;
-import com.example.cinemasystem.ServiceInterfaces.IMovieService;
-import com.example.cinemasystem.model.Movie;
+import com.example.cinemasystem.service.FileStorageService;
+import com.example.cinemasystem.serviceInterfaces.IMovie;
+import com.example.cinemasystem.serviceInterfaces.IMovieService;
 import com.example.cinemasystem.model.Trailer;
 import com.example.cinemasystem.model.request.MovieCreateRequest;
 import com.example.cinemasystem.model.request.MovieEditRequest;
@@ -17,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -35,15 +33,7 @@ public class MovieController {
     @GetMapping
     public CompletableFuture<ResponseEntity> getAllMovies()
     {
-        CompletableFuture<List<IMovie>> movies = movieService.returnAllMovies();
-
-        if (movies!= null)
-        {
-            return movies.thenApply(ResponseEntity::ok);
-        }
-        else {
-            return (CompletableFuture) ResponseEntity.notFound();
-        }
+       return movieService.returnAllMovies();
     }
 
 

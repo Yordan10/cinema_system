@@ -1,8 +1,8 @@
 package com.example.cinemasystem.UserTests;
 
 
-import com.example.cinemasystem.Service.UserService;
-import com.example.cinemasystem.ServiceInterfaces.IAccount;
+import com.example.cinemasystem.service.UserService;
+import com.example.cinemasystem.serviceInterfaces.IAccount;
 import com.example.cinemasystem.model.UserAccount;
 import com.example.cinemasystem.model.request.UserCreateRequest;
 import com.example.cinemasystem.repository.AccountDalJDBC;
@@ -54,9 +54,17 @@ public class UserServiceUnitTests {
     @Test
      void getAccountByIdTest(){
 
+
         int id = 10;
         UserAccount user = new UserAccount(10,"nz","jsd","hshja","jsd","hds","USER");
-
+        UserAccount user2 = new UserAccount();
+        user.getId();
+        user.getEmail();
+        user.getFirstName();
+        user.getUsername();
+        user.getRole();
+        user.getPassword();
+        user.getLastName();
         when(accountDalJDBC.getAccountById(id))
                 .thenReturn(user);
 
@@ -127,4 +135,17 @@ public class UserServiceUnitTests {
 
         Assertions.assertEquals(true,userService.userRegistration(userCreateRequest));
     }
+    /*@Test
+    void getAllAccountsAsync(){
+        List<IAccount> users = new ArrayList<>();
+        UserAccount user =  new UserAccount(1,"ne","ekke","keke","err","lastname","USER");
+        users.add(user);
+
+        when(accountDalJDBC.getAllAccounts()).thenReturn(Stream.of(user)
+                .collect(Collectors.toList()));
+
+
+        Assertions.assertEquals(CompletableFuture.completedFuture(users),userService.getAllAccountsAsync());
+
+    }*/
 }

@@ -1,6 +1,6 @@
-package com.example.cinemasystem.DALInterfaces;
+package com.example.cinemasystem.dalInterfaces;
 
-import com.example.cinemasystem.ServiceInterfaces.IMovie;
+import com.example.cinemasystem.serviceInterfaces.IMovie;
 import com.example.cinemasystem.model.Trailer;
 import com.example.cinemasystem.model.request.MovieCreateRequest;
 import com.example.cinemasystem.model.request.MovieEditRequest;
@@ -16,7 +16,7 @@ public interface IMovieDAL {
     int getMovieIdByTitle (String title);
     boolean addTrailerToMovie(int movieId,String trailer);
     boolean addPosterToMovie(String path,int movieId);
-    boolean editPosterOfMovie(MovieEditRequest movieEditRequest);
+    boolean editMovie(MovieEditRequest movieEditRequest);
     void deleteMovie(int movieId);
     void deletePosterOfMovie(int movieId);
     void deleteTrailerOfMovie(int movieId);

@@ -1,9 +1,9 @@
-package com.example.cinemasystem.Service;
+package com.example.cinemasystem.service;
 
 
-import com.example.cinemasystem.DALInterfaces.IAccountDAL;
-import com.example.cinemasystem.ServiceInterfaces.IAccount;
-import com.example.cinemasystem.ServiceInterfaces.IUserService;
+import com.example.cinemasystem.dalInterfaces.IAccountDAL;
+import com.example.cinemasystem.serviceInterfaces.IAccount;
+import com.example.cinemasystem.serviceInterfaces.IUserService;
 import com.example.cinemasystem.model.UserAccount;
 import com.example.cinemasystem.model.request.UserCreateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +48,17 @@ public class UserService implements IUserService {
     }
     @Override
     @Async("asyncExecutor")
-    public CompletableFuture<List<IAccount>> getAllAccountsAsync() {
-        return CompletableFuture.completedFuture(dal.getAllAccounts());
+    public CompletableFuture<ResponseEntity> getAllAccountsAsync() {
+        CompletableFuture<List<IAccount>> accounts = CompletableFuture.completedFuture(dal.getAllAccounts());
+
+
+        if(accounts != null) {
+
+            return accounts.thenApply(ResponseEntity::ok);
+        } else {
+
+            return (CompletableFuture) ResponseEntity.notFound();
+        }
     }
 
 
