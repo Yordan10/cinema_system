@@ -1,7 +1,6 @@
 HELP.md
 .gradle
-build/
-!**/build/libs/**
+
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
@@ -16,7 +15,6 @@ build/
 .sts4-cache
 bin/
 !**/src/main/**/bin/
-!**/build/libs/**
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
@@ -27,7 +25,7 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-!**/build/libs/**
+
 
 ### NetBeans ###
 /nbproject/private/
