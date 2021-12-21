@@ -22,7 +22,7 @@ public abstract class User {
 
     protected   String role;
 
-    public  User() {
+    protected  User() {
 
     }
 

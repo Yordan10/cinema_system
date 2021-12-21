@@ -2,7 +2,6 @@ package com.example.cinemasystem.model.request;
 
 import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.sql.Date;
 

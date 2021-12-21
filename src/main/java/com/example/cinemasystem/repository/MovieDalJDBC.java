@@ -427,6 +427,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
             }
             catch (SQLException throwable){
                 System.out.println("Can't close connection");
+
             }
         }
 

@@ -3,11 +3,13 @@ package com.example.cinemasystem.repository;
 import com.example.cinemasystem.dalInterfaces.IAccountDAL;
 import com.example.cinemasystem.serviceInterfaces.IAccount;
 import com.example.cinemasystem.model.UserAccount;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Repository
 public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
@@ -128,7 +130,11 @@ public class AccountDalJDBC extends JDBCRepository implements IAccountDAL {
 
             return account;
 
-        } catch (SQLException throwable) {System.out.println("Can't get account by username");}
+        } catch (SQLException throwable)
+        {
+            System.out.println("Can't get account by username");
+
+        }
 
         finally {
             try{
