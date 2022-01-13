@@ -15,6 +15,7 @@ import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 
 @Component
 public class WebSocketSecurityInterceptor implements ChannelInterceptor {
+
     private final SimpUserRegistry simpUserRegistry;
 
     @Autowired
@@ -46,5 +47,4 @@ public class WebSocketSecurityInterceptor implements ChannelInterceptor {
     public void handleSessionDisconnectEvent(SessionDisconnectEvent event) {
         logger.info("session closed : " + simpUserRegistry.getUserCount());
     }
-
 }

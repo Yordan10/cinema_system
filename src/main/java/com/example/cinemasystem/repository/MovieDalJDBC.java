@@ -45,7 +45,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
         }
         catch (SQLException throwable){
-            System.out.println("Can't connect to database");
+            System.out.println("Can't get all movies");
         }
         finally {
             try{
@@ -91,7 +91,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
         }
         catch (SQLException throwable)
         {
-            System.out.println("Can't connect to database3");
+            System.out.println("Can't get movie by id");
         }
         finally {
             try{
@@ -129,7 +129,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
         }
         catch (SQLException throwable)
         {
-            System.out.println("Can't connect to database2");
+            System.out.println("Can't get movie by title");
         }
         finally {
             try{
@@ -165,7 +165,7 @@ public class MovieDalJDBC extends JDBCRepository implements IMovieDAL {
 
 
 
-        } catch (SQLException throwable) {System.out.println("Can't connect to database1");}
+        } catch (SQLException throwable) {System.out.println("Can't get photo of movie");}
 
         finally {
             try{

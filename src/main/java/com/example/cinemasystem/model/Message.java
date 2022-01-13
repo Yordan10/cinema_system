@@ -1,17 +1,22 @@
 package com.example.cinemasystem.model;
 
 import lombok.Getter;
+import lombok.Setter;
 
+
+@Getter
+@Setter
 public class Message {
 
-    @Getter
-    private String content;
+    private String name;
 
-    public Message(){}
 
-    public Message(String content){
-        this.content=content;
+    public Message(String name) {
+        this.name = name;
+
     }
 
+    public Message() {
+    }
 
 }

@@ -21,13 +21,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final AuthenticationUserDetailService authenticationUserDetailService;
 
     @Override protected void configure(HttpSecurity http) throws Exception {
-        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and().csrf().disable();
-        http.cors().and().authorizeRequests()
-                .antMatchers(HttpMethod.POST, AuthenticationConfigConstants.SIGN_UP_URL).permitAll()
+        http.cors().and().csrf().disable().authorizeRequests()
+    //    http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
+       // http.cors().and().authorizeRequests()
+        .antMatchers(HttpMethod.POST, AuthenticationConfigConstants.SIGN_UP_URL).permitAll()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
                 //ROLE BASED AUTHENTICATION START
             //    .antMatchers("/account").hasAnyAuthority("USER")
                 .antMatchers("/account/*").permitAll()
                 .antMatchers("/account").permitAll()
+                .antMatchers("/api/**").permitAll()
+                .antMatchers("/ws/**").permitAll()
+                .antMatchers("/app/**").permitAll()
                 .antMatchers("/movies/upload/photo/*").hasAnyAuthority("ADMIN")
                 .antMatchers("/movies/**/**").permitAll()//hasAnyAuthority("USER")
                 .antMatchers("/movies/**").permitAll()//hasAnyAuthority("USER")
