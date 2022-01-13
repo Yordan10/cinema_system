@@ -1,15 +1,15 @@
 HELP.md
 .gradle
 
-/build/classes
-/build/generated
-/build/jacoco
-/build/jacocoHtml
-/build/reports
-/build/resources
-/build/sonar
-/build/test-results
-/build/tmp
+# /build/classes
+# /build/generated
+# /build/jacoco
+# /build/jacocoHtml
+# /build/reports
+# /build/resources
+# /build/sonar
+# /build/test-results
+# /build/tmp
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
