@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaSystem</a> &gt; <a href="index.source.html" class="el_package">com.example.cinemasystem.controller</a> &gt; <span class="el_source">AccountController.java</span></div><h1>AccountController.java</h1><pre class="source lang-java linenums">package com.example.cinemasystem.controller;
+
+import com.example.cinemasystem.serviceInterfaces.IAccount;
+import com.example.cinemasystem.serviceInterfaces.IUserService;
+
+import com.example.cinemasystem.model.request.UserCreateRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.CompletableFuture;
+
+@RestController
+@CrossOrigin(origins = &quot;*&quot;,allowedHeaders = &quot;*&quot;)
+@RequestMapping(&quot;/account&quot;)
+<span class="fc" id="L18">public class AccountController {</span>
+
+    @Autowired
+    private IUserService userService ;
+
+    @GetMapping
+    public CompletableFuture&lt;ResponseEntity&gt; getAllAccounts()
+    {
+<span class="nc" id="L26">        return userService.getAllAccountsAsync();</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;IAccount&gt; getAccountById(@PathVariable(value = &quot;id&quot;) int id)
+    {
+<span class="fc" id="L32">        return userService.returnAccountByID(id);</span>
+    }
+
+    @GetMapping(&quot;/user&quot;)
+    public ResponseEntity&lt;IAccount&gt; getAccountByUsername()
+    {
+<span class="fc" id="L38">        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();</span>
+<span class="fc" id="L39">        String currentPrincipalName = authentication.getName();</span>
+
+<span class="fc" id="L41">        return userService.returnAccountByUsername(currentPrincipalName);</span>
+
+    }
+
+    @PostMapping(&quot;/register&quot;)
+    public ResponseEntity userRegistration(@RequestBody UserCreateRequest userCreateRequest) {
+
+<span class="fc" id="L48">       userService.userRegistration(userCreateRequest);</span>
+<span class="fc" id="L49">       return ResponseEntity.ok().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

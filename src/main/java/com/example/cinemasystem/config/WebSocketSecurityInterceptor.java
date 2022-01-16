@@ -23,28 +23,28 @@ public class WebSocketSecurityInterceptor implements ChannelInterceptor {
         this.simpUserRegistry = simpUserRegistry;
     }
 
-    Logger logger = LoggerFactory.getLogger(WebSocketConfig.class);
+    Logger logger = LoggerFactory.getLogger(WebSocketSecurityInterceptor.class);
 
-    @EventListener(WebSocketSession.class)
-    public void handleWebSocketSession(WebSocketSession event) {
-        logger.info("WebSocketSession: " + simpUserRegistry.getUserCount());
-    }
-
-    @EventListener(SessionSubscribeEvent.class)
-    public void handleSessionSubscribeEvent(SessionSubscribeEvent event) {
-        logger.info("SessionSubscribeEvent: " + simpUserRegistry.getUserCount());
-
-        StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
-        logger.info("SessionSubscribeEvent sha: " + sha.getSessionId());
-    }
-
-    @EventListener(SessionConnectedEvent.class)
-    public void handleSessionConnectedEvent(SessionConnectedEvent event) {
-        logger.info("Received a new web socket connection : " + simpUserRegistry.getUserCount());
-    }
-
-    @EventListener(SessionDisconnectEvent.class)
-    public void handleSessionDisconnectEvent(SessionDisconnectEvent event) {
-        logger.info("session closed : " + simpUserRegistry.getUserCount());
-    }
+//    @EventListener(WebSocketSession.class)
+//    public void handleWebSocketSession(WebSocketSession event) {
+//        logger.info("WebSocketSession: " + simpUserRegistry.getUserCount());
+//    }
+//
+//    @EventListener(SessionSubscribeEvent.class)
+//    public void handleSessionSubscribeEvent(SessionSubscribeEvent event) {
+//        logger.info("SessionSubscribeEvent: " + simpUserRegistry.getUserCount());
+//
+//        StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
+//        logger.info("SessionSubscribeEvent sha: " + sha.getSessionId());
+//    }
+//
+//    @EventListener(SessionConnectedEvent.class)
+//    public void handleSessionConnectedEvent(SessionConnectedEvent event) {
+//        logger.info("Received a new web socket connection : " + simpUserRegistry.getUserCount());
+//    }
+//
+//    @EventListener(SessionDisconnectEvent.class)
+//    public void handleSessionDisconnectEvent(SessionDisconnectEvent event) {
+//        logger.info("session closed : " + simpUserRegistry.getUserCount());
+//    }
 }

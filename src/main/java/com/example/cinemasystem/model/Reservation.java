@@ -6,8 +6,8 @@ import lombok.Setter;
 
 import java.util.Date;
 
-@Getter@
-        Setter
+@Getter
+@Setter
 public class Reservation implements IReservation {
 
     private int id;

@@ -2,7 +2,6 @@ package com.example.cinemasystem.MovieTests;
 
 import com.example.cinemasystem.enums.Genre;
 import com.example.cinemasystem.service.MovieService;
-import com.example.cinemasystem.controller.MovieController;
 import com.example.cinemasystem.model.Movie;
 import com.example.cinemasystem.model.Trailer;
 import com.example.cinemasystem.model.request.MovieCreateRequest;
@@ -15,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.multipart.MultipartFile;
 
 import static org.mockito.Mockito.*;
 
@@ -26,8 +24,7 @@ public class MovieServiceUnitTests {
     @Autowired
     MovieService movieService;
 
-    @Autowired
-    MovieController movieController;
+
 
     @MockBean
     MovieDalJDBC movieDalJDBC;
@@ -45,6 +42,14 @@ public class MovieServiceUnitTests {
         movie.getRating();
         movie.getDirector();
 
+
+        movie.setDescription("a");
+        movie.setTitle("b");
+        movie.setGenre(Genre.COMEDY);
+        movie.setId(1);
+        movie.setDirector("a");
+        movie.setLength(12);
+        movie.setRating(12.4);
 
         when(movieDalJDBC.getMovieById(id))
                 .thenReturn(movie);
@@ -183,15 +188,5 @@ Movie movie = new Movie();
         Assertions.assertEquals(true,movieService.deleteMovie(id));
 }
 
-@Test
-    void savePosterTestFail(){
 
-    MultipartFile file = null;
-    String title = ":)";
-
-//    int randomNum = 1;
-//    when(movieDalJDBC.getMovieIdByTitle(title)).thenReturn(randomNum);
-//    when(movieDalJDBC.addPosterToMovie("asd",randomNum)).thenReturn(true);
-    Assertions.assertEquals(new ResponseEntity(HttpStatus.BAD_REQUEST),movieController.uploadPhoto(file,title));
-}
 }

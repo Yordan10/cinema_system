@@ -4,7 +4,6 @@ import com.example.cinemasystem.enums.Genre;
 import lombok.Data;
 import lombok.Getter;
 
-@Data
 @Getter
 public class MovieCreateRequest {
 

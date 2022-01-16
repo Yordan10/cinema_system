@@ -5,7 +5,7 @@ import lombok.Getter;
 
 import java.sql.Date;
 
-@Data
+
 @Getter
 
 public class ReservationRequest {

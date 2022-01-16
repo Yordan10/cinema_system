@@ -83,7 +83,7 @@ public class MovieController {
     }
 
     @GetMapping("/trailer/{id}")
-    public ResponseEntity<Trailer> getTrailerCharityById(@PathVariable(value = "id") int id)
+    public ResponseEntity<Trailer> getTrailerById(@PathVariable(value = "id") int id)
     {
         return movieService.returnTrailerOfMovieById(id);
     }

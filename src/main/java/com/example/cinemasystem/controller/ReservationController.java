@@ -1,5 +1,6 @@
 package com.example.cinemasystem.controller;
 
+import com.example.cinemasystem.serviceInterfaces.IAccount;
 import com.example.cinemasystem.serviceInterfaces.IReservationService;
 import com.example.cinemasystem.serviceInterfaces.IUserService;
 import com.example.cinemasystem.model.request.ReservationRequest;
@@ -39,9 +40,10 @@ public class ReservationController {
     public ResponseEntity makeReservation(@RequestBody ReservationRequest request){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        int accountID = userService.getAccountByUsername(currentPrincipalName).getId();
+        IAccount account =  userService.getAccountByUsername(currentPrincipalName);
 
-        reservationService.makeReservation(accountID,request);
+
+        reservationService.makeReservation(account.getId(),request);
 
         return ResponseEntity.ok().build();
     }
